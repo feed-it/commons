@@ -1,0 +1,36 @@
+{
+	"name": "components",
+	"version": "0.0.0",
+	"description": "Reusable ReactJS components",
+	"author": "Feed'it",
+	"license": "UNLICENSED",
+	"keywords": [
+		"react-components",
+		"react"
+	],
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"rollup": "rollup -c --bundleConfigAsCjs",
+		"release": "standard-version && git push --follow-tags"
+	},
+	"packageManager": "pnpm@10.14.0",
+	"devDependencies": {
+		"@rollup/plugin-commonjs": "^28.0.6",
+		"@rollup/plugin-node-resolve": "^16.0.1",
+		"@rollup/plugin-terser": "^0.4.4",
+		"@rollup/plugin-typescript": "^12.1.4",
+		"@types/lodash.debounce": "^4.0.9",
+		"@types/react": "^19.1.10",
+		"lodash.debounce": "^4.0.8",
+		"react": "^19.1.1",
+		"rollup-plugin-dts": "^6.2.1",
+		"rollup-plugin-peer-deps-external": "^2.2.4",
+		"rollup-plugin-postcss": "^4.0.2",
+		"sass": "^1.90.0",
+		"standard-version": "^9.5.0",
+		"tslib": "^2.8.1",
+		"typescript": "^5.9.2"
+	}
+}

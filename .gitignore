@@ -1,0 +1,11 @@
+# Build
+dist/
+
+# Node
+node_modules
+
+# Misc
+.idea
+.rollup.cache/
+.DS_Store
+npm-debug.log*

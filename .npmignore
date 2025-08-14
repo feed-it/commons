@@ -1,0 +1,9 @@
+node_modules
+src
+.github
+.prettierrc
+tsconfig.json
+package-lock.json
+.versionrc
+README.md
+CHANGELOG.md

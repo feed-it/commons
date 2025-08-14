@@ -1,0 +1,43 @@
+.button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+	padding: 0.5em 1em;
+	border: 1px solid var(--color);
+	border-radius: var(--border-radius);
+	background-color: var(--color);
+	text-wrap: nowrap;
+	color: var(--text-color);
+	transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease, filter 0.3s ease;
+
+	&.squared {
+		padding: 0.5em;
+	}
+
+	&:disabled {
+		--color: var(--dark-gray) !important;
+		cursor: not-allowed;
+	}
+
+	&:focus-visible {
+		outline: var(--outline);
+	}
+
+	&:not(:disabled):focus,
+	&:not(:disabled):hover {
+		border-color: var(--hover-color);
+		background-color: var(--hover-color);
+		color: var(--text-hover-color);
+	}
+
+	&.outline {
+		background-color: transparent;
+		color: var(--color);
+	}
+
+	& > svg {
+		width: 1.2em;
+		aspect-ratio: 1;
+	}
+}
