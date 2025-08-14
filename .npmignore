@@ -2,6 +2,7 @@ node_modules
 src
 .github
 .prettierrc
+.prettierignore
 tsconfig.json
 package-lock.json
 .versionrc
