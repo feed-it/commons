@@ -1,3 +1,3 @@
-# Feed'it Components
+# Feed'it Commons
 
-> Reusable ReactJS components
+> Reusable components, scripts, styles, hooks & more

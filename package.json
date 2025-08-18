@@ -1,7 +1,7 @@
 {
-	"name": "@feed-it/components",
-	"version": "0.0.0",
-	"description": "Reusable ReactJS components",
+	"name": "@feed-it/commons",
+	"version": "1.0.0",
+	"description": "Reusable components, scripts, styles, hooks & more",
 	"author": "Feed'it",
 	"license": "UNLICENSED",
 	"keywords": [
