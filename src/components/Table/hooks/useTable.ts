@@ -148,6 +148,7 @@ export default function useTable({ allowMismatch, columns, data, uniqueValueColu
 			result.push({
 				label: column,
 				prop: column,
+				type: 'text',
 				canEdit: false,
 				canBeNull: true,
 				error: { type: 'not-found', columns: remainingColumns },

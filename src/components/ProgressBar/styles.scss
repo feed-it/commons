@@ -13,7 +13,7 @@
 		position: relative;
 		display: flex;
 		border-radius: var(--border-radius);
-		height: 1.8em;
+		height: 1.5em;
 		min-width: 200px;
 		background: var(--lightest-gray);
 		overflow: hidden;
@@ -23,25 +23,7 @@
 			width: 0;
 			height: 100%;
 			background-color: var(--color);
-			// background-image: repeating-linear-gradient(
-			// 	-45deg,
-			// 	var(--color),
-			// 	var(--color) calc($dashSize / 2 * 1px),
-			// 	color-mix(in srgb, var(--color) 70%, var(--white)) calc($dashSize / 2 * 1px),
-			// 	color-mix(in srgb, var(--color) 70%, var(--white)) calc($dashSize * 1px)
-			// );
-			// animation: progress-bar 2s linear infinite;
 			transition: width 0.5s ease, color 0.3s ease;
-			will-change: color width;
-
-			// @keyframes progress-bar {
-			// 	from {
-			// 		background-position-x: 0;
-			// 	}
-			// 	to {
-			// 		background-position-x: calc(1px * sqrt(2 * pow($dashSize, 2)));
-			// 	}
-			// }
 		}
 
 		& > .progress-bar-text {
@@ -52,9 +34,9 @@
 			font-weight: 500;
 			text-align: center;
 			width: 100%;
+			font-size: 0.9em;
 			color: var(--white);
 			transition: clip-path 0.5s ease, color 0.3s ease;
-			will-change: clip-path color;
 
 			& + .progress-bar-text {
 				color: var(--color);

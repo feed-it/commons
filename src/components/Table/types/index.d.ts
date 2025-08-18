@@ -1,33 +1,39 @@
 import { HTMLInputTypeAttribute, JSX } from 'react';
 
-export interface Column {
+export type Column = {
 	label: string;
 	prop: string;
-	type?: HTMLInputTypeAttribute | 'select';
+	type: 'select' | 'gauge' | HTMLInputTypeAttribute;
+
 	values?: { label: string; value: string }[] | ((row: any) => { label: string; value: string }[]);
-	canEdit?: boolean;
 	canBeNull?: boolean;
+	canEdit?: boolean;
 	unique?: boolean | 'base' | 'case';
 	validate?: (value: string) => boolean;
-}
 
-export interface ExtendedColumn extends Column {
+	min?: number;
+	max?: number;
+	color?: string;
+	displayText?: boolean;
+};
+
+export type ExtendedColumn = Column & {
 	error?: {
 		type: string;
 		target?: string;
 		columns: Column[];
 	};
-}
+};
 
-export interface Action {
+export type Action = {
 	label: string;
 	icon: JSX.Element | (() => JSX.Element);
 	color?: string;
 	onClick: (row: any) => void;
-}
+};
 
-export interface TableHandle {
+export type TableHandle = {
 	columns: ExtendedColumn[];
 	data: any[];
 	validData: any[];
-}
+};

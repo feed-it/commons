@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { Dropdown } from '../Dropdown';
+import { ProgressBar } from '../ProgressBar';
 import { ExtendedColumn } from './types';
 
 type TableCellProps = {
@@ -105,10 +106,21 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 	}, [column, data, value]);
 
 	if (column.type === 'gauge') {
-		return <td></td>;
+		return (
+			<td>
+				<ProgressBar
+					id={column.prop}
+					value={value}
+					min={column.min}
+					max={column.max}
+					color={column.color}
+					displayText={column.displayText}
+				/>
+			</td>
+		);
 	}
 
-	if (column.canEdit ?? true) {
+	if (column.type !== 'gauge' && column.canEdit) {
 		if (column.type === 'select') {
 			let values;
 			if (typeof column.values === 'function') {

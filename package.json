@@ -12,6 +12,7 @@
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
 	"scripts": {
+		"dev": "nodemon",
 		"rollup": "rollup -c --bundleConfigAsCjs",
 		"release": "standard-version && git push --follow-tags"
 	},
@@ -23,6 +24,7 @@
 		"@types/lodash.debounce": "^4.0.9",
 		"@types/react": "^19.1.10",
 		"lodash.debounce": "^4.0.8",
+		"nodemon": "^3.1.10",
 		"react": "^19.1.1",
 		"rollup": "^4.46.2",
 		"rollup-plugin-dts": "^6.2.1",
