@@ -3,7 +3,7 @@ import { HTMLInputTypeAttribute, JSX } from 'react';
 export interface Column {
 	label: string;
 	prop: string;
-	inputType?: HTMLInputTypeAttribute | 'select';
+	type?: HTMLInputTypeAttribute | 'select';
 	values?: { label: string; value: string }[] | ((row: any) => { label: string; value: string }[]);
 	canEdit?: boolean;
 	canBeNull?: boolean;

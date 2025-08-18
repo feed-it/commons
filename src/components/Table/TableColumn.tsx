@@ -2,11 +2,11 @@ import { ChangeEvent, useCallback } from 'react';
 import Trash from './assets/Trash';
 import { ExtendedColumn } from './types';
 
-interface TableColumnProps {
+type TableColumnProps = {
 	column: ExtendedColumn;
 	updateColumn: (oldColumn: string, newColumn: string) => void;
 	deleteColumn: (prop: string) => void;
-}
+};
 
 export default function TableColumn({ column, updateColumn, deleteColumn }: TableColumnProps) {
 	const onChange = useCallback(

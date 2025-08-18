@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { DropdownProps } from '..';
-import useOutsideClick from '../../../hooks/useOutsideClick';
+import { useOutsideClick } from '../../../hooks/useOutsideClick';
 
 type useDropdownType = {
-	values: DropdownProps['values'];
-	defaultValue: DropdownProps['defaultValue'];
+	values: { label: string; value: any }[];
+	defaultValue?: any;
 };
 
 export default function useDropdown({ values, defaultValue }: useDropdownType) {

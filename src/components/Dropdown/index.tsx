@@ -1,9 +1,9 @@
 import { CSSProperties } from 'react';
-import Button from '../Button';
+import { Button } from '../Button';
 import useDropdown from './hooks/useDropdown';
 import './styles.scss';
 
-export interface DropdownProps {
+export type DropdownProps = {
 	name: string;
 	title?: string;
 	icon?: import('react').JSX.Element;
@@ -13,9 +13,9 @@ export interface DropdownProps {
 	onChange?: (value: any) => void;
 	hideSelectedValue?: boolean;
 	legacyDropdown?: boolean;
-}
+};
 
-export default function Dropdown({
+export function Dropdown({
 	name,
 	title,
 	icon,

@@ -6,7 +6,7 @@ import useTable from './hooks/useTable';
 import './styles.scss';
 import { Action, Column, TableHandle } from './types';
 
-interface TableProps {
+export type TableProps = {
 	ref?: RefObject<TableHandle>;
 	columns: Column[];
 	data: any[];
@@ -15,9 +15,9 @@ interface TableProps {
 	displayCount?: boolean;
 	allowMismatch?: boolean;
 	canDeleteRows?: false;
-}
+};
 
-export default function Table({
+export function Table({
 	ref,
 	columns,
 	data,

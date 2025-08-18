@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const useHorizontalScroll = (onScroll?: (ev: WheelEvent) => void) => {
+export function useHorizontalScroll(onScroll?: (ev: WheelEvent) => void) {
 	const elRef = useRef<HTMLElement>(null);
 
 	useEffect(() => {
@@ -24,6 +24,4 @@ const useHorizontalScroll = (onScroll?: (ev: WheelEvent) => void) => {
 	}, [onScroll]);
 
 	return elRef;
-};
-
-export default useHorizontalScroll;
+}

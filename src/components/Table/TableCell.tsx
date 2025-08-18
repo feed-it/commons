@@ -1,14 +1,14 @@
 import { useEffect, useMemo } from 'react';
-import Dropdown from '../Dropdown';
+import { Dropdown } from '../Dropdown';
 import { ExtendedColumn } from './types';
 
-interface TableCellProps {
+type TableCellProps = {
 	row: any;
 	column: ExtendedColumn;
 	data: any[];
 	allowMismatch: boolean;
 	onChange: (value: string) => void;
-}
+};
 
 export default function TableCell({ row, column, data, allowMismatch = false, onChange }: TableCellProps) {
 	const value = useMemo(() => {
@@ -21,7 +21,7 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 		const prop = column.error?.type === 'mismatch' && column.error.target ? column.error.target : column.prop;
 		const initialValue = row[prop];
 
-		if (column.inputType !== 'select') {
+		if (column.type !== 'select') {
 			return initialValue;
 		}
 
@@ -104,8 +104,12 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 		return undefined;
 	}, [column, data, value]);
 
+	if (column.type === 'gauge') {
+		return <td></td>;
+	}
+
 	if (column.canEdit ?? true) {
-		if (column.inputType === 'select') {
+		if (column.type === 'select') {
 			let values;
 			if (typeof column.values === 'function') {
 				values = column.values(row);
@@ -138,7 +142,7 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 				<input
 					name={column.prop}
 					aria-label={column.label}
-					type={column.inputType}
+					type={column.type}
 					className='cell-input'
 					defaultValue={value}
 					autoComplete='off'

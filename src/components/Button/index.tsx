@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react';
 import './styles.scss';
 
-interface ButtonProps {
+export type ButtonProps = {
 	color?: string;
 	textColor?: string;
 	hoverColor?: string;
@@ -9,9 +9,9 @@ interface ButtonProps {
 	squared?: boolean;
 	outline?: boolean;
 	rounded?: boolean;
-}
+};
 
-export default function Button({
+export function Button({
 	color = 'var(--blue)',
 	textColor = 'var(--white)',
 	hoverColor = color,
