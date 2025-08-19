@@ -1,9 +1,9 @@
 import { CSSProperties, RefObject } from 'react';
-import TableCell from './TableCell';
-import TableColumn from './TableColumn';
-import Trash from './assets/Trash';
+import Trash from '../assets/Trash';
 import useTable from './hooks/useTable';
 import './styles.scss';
+import TableCell from './TableCell';
+import TableColumn from './TableColumn';
 import { Action, Column, TableHandle } from './types';
 
 export type TableProps = {
@@ -14,7 +14,8 @@ export type TableProps = {
 	uniqueValueColumn: string;
 	displayCount?: boolean;
 	allowMismatch?: boolean;
-	canDeleteRows?: false;
+	canDeleteRows?: boolean;
+	sortingHeaders?: boolean;
 };
 
 export function Table({
@@ -26,14 +27,16 @@ export function Table({
 	displayCount = true,
 	allowMismatch = false,
 	canDeleteRows = false,
+	sortingHeaders = true,
 }: TableProps) {
-	const { localData, updateData, deleteRow, updateColumn, deleteColumn, reviewedColumns } = useTable({
-		allowMismatch,
-		columns,
-		data,
-		uniqueValueColumn,
-		ref,
-	});
+	const { sortedData, sortBy, setSortBy, updateData, deleteRow, updateColumn, deleteColumn, reviewedColumns } =
+		useTable({
+			allowMismatch,
+			columns,
+			data,
+			uniqueValueColumn,
+			ref,
+		});
 
 	return (
 		<div className='table-container'>
@@ -45,6 +48,9 @@ export function Table({
 							<TableColumn
 								key={`headingColumn#${column.prop}`}
 								column={column}
+								sortingHeaders={sortingHeaders}
+								sortBy={sortBy}
+								setSortBy={setSortBy}
 								updateColumn={updateColumn}
 								deleteColumn={deleteColumn}
 							/>
@@ -53,7 +59,7 @@ export function Table({
 					</tr>
 				</thead>
 				<tbody>
-					{localData.map((row, index) => (
+					{sortedData.map((row, index) => (
 						<tr key={row[uniqueValueColumn]}>
 							{displayCount && <td>{index + 1}</td>}
 
@@ -62,7 +68,7 @@ export function Table({
 									key={`${row[uniqueValueColumn]}#${column.prop}`}
 									row={row}
 									column={column}
-									data={localData}
+									data={sortedData}
 									allowMismatch
 									onChange={(value) =>
 										void updateData(

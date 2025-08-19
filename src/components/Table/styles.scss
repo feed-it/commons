@@ -34,49 +34,57 @@
 				&.warn {
 					--color: color-mix(in srgb, var(--red) 50%, var(--yellow) 50%);
 				}
+			}
 
-				& > .cell-container {
+			& > .cell-container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 10px;
+
+				& > span {
+					flex-grow: 1;
+				}
+
+				& > .select-container {
+					flex-grow: 1;
+					position: relative;
+					padding-right: 20px;
+
+					& > select {
+						z-index: 1;
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 100%;
+						appearance: auto;
+						border: none;
+						background-color: transparent;
+						font-weight: inherit;
+						text-wrap: nowrap;
+						color: inherit;
+						cursor: pointer;
+					}
+				}
+
+				& > .column-button {
 					display: flex;
 					justify-content: center;
 					align-items: center;
-					gap: 10px;
+					border: none;
+					background-color: transparent;
+					color: var(--color);
+					opacity: 0;
+					transition: opacity 0.3s ease;
 
-					& > .select-container {
-						flex-grow: 1;
-						position: relative;
-						padding-right: 20px;
-
-						& > select {
-							z-index: 1;
-							position: absolute;
-							top: 0;
-							left: 0;
-							width: 100%;
-							height: 100%;
-							appearance: auto;
-							border: none;
-							background-color: transparent;
-							font-weight: inherit;
-							text-wrap: nowrap;
-							color: inherit;
-							cursor: pointer;
-						}
+					& > svg {
+						width: 1.2em;
 					}
+				}
 
-					& > .delete-button {
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						border: none;
-						background-color: transparent;
-						color: var(--color);
-						opacity: 0;
-						transition: opacity 0.3s ease;
-					}
-
-					&:hover > .delete-button {
-						opacity: 1;
-					}
+				&:hover > .column-button {
+					opacity: 1;
 				}
 			}
 		}

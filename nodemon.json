@@ -1,6 +1,6 @@
 {
 	"ignore": [".git", ".github", "dist", "node_modules"],
-	"ext": "ts, tsx, js, jsx, json, json",
+	"ext": "ts, tsx, js, jsx, json, scss",
 	"events": {
 		"restart": "pnpm run rollup"
 	}

@@ -12,6 +12,21 @@ interface useTableProps {
 
 export default function useTable({ allowMismatch, columns, data, uniqueValueColumn, ref }: useTableProps) {
 	const [localData, setLocalData] = useState(data);
+	const [sortBy, setSortBy] = useState<string>();
+
+	const sortedData = useMemo(() => {
+		if (!sortBy) {
+			return localData;
+		}
+
+		const collator = Intl.Collator('fr-FR', {
+			ignorePunctuation: true,
+			numeric: true,
+			sensitivity: 'base',
+		});
+
+		return localData.toSorted((a, b) => collator.compare(a[sortBy], b[sortBy]));
+	}, [localData, sortBy]);
 
 	const updateData = useCallback(
 		(id: any, prop: string, value: any) => {
@@ -214,7 +229,9 @@ export default function useTable({ allowMismatch, columns, data, uniqueValueColu
 	);
 
 	return {
-		localData,
+		sortedData,
+		sortBy,
+		setSortBy,
 		updateData,
 		deleteRow,
 		updateColumn,
