@@ -98,8 +98,18 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 		}
 
 		//* Custom validation
-		if (typeof column.validate === 'function' && !column.validate(value)) {
-			return 'Cette valeur ne respecte pas les conditions de validation';
+		if (typeof column.validate === 'function') {
+			const result = column.validate(value);
+
+			//* Result treated as a string
+			if (typeof result === 'string') {
+				return result;
+			}
+
+			//* As boolean
+			if (result) {
+				return 'Cette valeur ne respecte pas les conditions de validation';
+			}
 		}
 
 		return undefined;

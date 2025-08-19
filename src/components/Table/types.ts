@@ -9,7 +9,7 @@ export type Column = {
 	allowNull?: boolean;
 	editable?: boolean;
 	unique?: boolean | 'base' | 'case';
-	validate?: (value: string) => boolean;
+	validate?: (value: string) => boolean | string;
 
 	min?: number;
 	max?: number;
