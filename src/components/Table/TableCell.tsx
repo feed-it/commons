@@ -75,7 +75,7 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 
 	const warning = useMemo(() => {
 		//* Nullable
-		if (!(column.canBeNull ?? true) && (!value || `${value}`.length === 0)) {
+		if (!(column.allowNull ?? true) && (!value || `${value}`.length === 0)) {
 			return 'Valeur requise';
 		}
 
@@ -120,7 +120,7 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 		);
 	}
 
-	if (column.type !== 'gauge' && column.canEdit) {
+	if (column.editable ?? true) {
 		if (column.type === 'select') {
 			let values;
 			if (typeof column.values === 'function') {

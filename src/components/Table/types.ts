@@ -6,8 +6,8 @@ export type Column = {
 	type: 'select' | 'gauge' | HTMLInputTypeAttribute;
 
 	values?: { label: string; value: string }[] | ((row: any) => { label: string; value: string }[]);
-	canBeNull?: boolean;
-	canEdit?: boolean;
+	allowNull?: boolean;
+	editable?: boolean;
 	unique?: boolean | 'base' | 'case';
 	validate?: (value: string) => boolean;
 
@@ -15,6 +15,8 @@ export type Column = {
 	max?: number;
 	color?: string;
 	displayText?: boolean;
+
+	actions?: Action[];
 };
 
 export type ExtendedColumn = Column & {
@@ -36,4 +38,7 @@ export type TableHandle = {
 	columns: ExtendedColumn[];
 	data: any[];
 	validData: any[];
+	errorOnNull: any[];
+	errorOnUnique: any[];
+	errorOnOthers: any[];
 };

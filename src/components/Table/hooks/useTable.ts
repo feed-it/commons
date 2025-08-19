@@ -149,8 +149,8 @@ export default function useTable({ allowMismatch, columns, data, uniqueValueColu
 				label: column,
 				prop: column,
 				type: 'text',
-				canEdit: false,
-				canBeNull: true,
+				editable: false,
+				allowNull: true,
 				error: { type: 'not-found', columns: remainingColumns },
 			});
 		}
@@ -167,6 +167,36 @@ export default function useTable({ allowMismatch, columns, data, uniqueValueColu
 				for (const row of localData) {
 					if (!Object.hasOwn(row, 'warnings')) {
 						validData.push(row);
+						continue;
+					}
+				}
+			}
+
+			const errorOnNull = new Map();
+			const errorOnUnique = new Map();
+			const errorOnOthers = new Map();
+
+			for (const column of reviewedColumns) {
+				const prop =
+					column.error?.type === 'mismatch' && column.error.target ? column.error.target : column.prop;
+
+				for (const row of localData) {
+					if (!(column.allowNull ?? true) && !row[prop] && !errorOnNull.has(row[uniqueValueColumn])) {
+						errorOnNull.set(row[uniqueValueColumn], row);
+					}
+
+					if (column.unique) {
+						const matches = localData.filter((x) => x[prop] === row[prop]).length;
+
+						if (matches > 1 && !errorOnUnique.has(row[uniqueValueColumn])) {
+							errorOnUnique.set(row[uniqueValueColumn], row);
+						}
+					}
+
+					if (typeof column.validate === 'function') {
+						if (column.validate(row[prop]) && !errorOnOthers.has(row[uniqueValueColumn])) {
+							errorOnOthers.set(row[uniqueValueColumn], row);
+						}
 					}
 				}
 			}
@@ -175,6 +205,9 @@ export default function useTable({ allowMismatch, columns, data, uniqueValueColu
 				columns: reviewedColumns,
 				data: localData,
 				validData,
+				errorOnNull: [...errorOnNull.values()],
+				errorOnUnique: [...errorOnUnique.values()],
+				errorOnOthers: [...errorOnOthers.values()],
 			};
 		},
 		[localData, reviewedColumns]
