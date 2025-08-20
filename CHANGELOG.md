@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/feed-it/commons/compare/v1.3.0...v1.4.0) (2025-08-20)
+
+
+### Features
+
+* **table:** row onClick + disable prop ([ad838f1](https://github.com/feed-it/commons/commit/ad838f1700f351e64867f57d7d1f7e907224f040))
+
 ## [1.3.0](https://github.com/feed-it/commons/compare/v1.2.0...v1.3.0) (2025-08-20)
 
 
