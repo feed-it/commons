@@ -16,6 +16,10 @@ export type TableProps = {
 	allowMismatch?: boolean;
 	canDeleteRows?: boolean;
 	sortingHeaders?: boolean;
+	rowOptions?: {
+		disableProp?: string;
+		onClick?: (row: any) => void;
+	};
 };
 
 export function Table({
@@ -28,6 +32,7 @@ export function Table({
 	allowMismatch = false,
 	canDeleteRows = false,
 	sortingHeaders = true,
+	rowOptions,
 }: TableProps) {
 	const { sortedData, sortBy, setSortBy, updateData, deleteRow, updateColumn, deleteColumn, reviewedColumns } =
 		useTable({
@@ -60,12 +65,24 @@ export function Table({
 				</thead>
 				<tbody>
 					{sortedData.map((row, index) => (
-						<tr key={row[uniqueValueColumn]}>
+						<tr
+							key={row[uniqueValueColumn]}
+							style={
+								rowOptions?.disableProp && row[rowOptions.disableProp]
+									? {
+											opacity: 0.3,
+									  }
+									: undefined
+							}
+							onClick={() => {
+								if (rowOptions?.onClick) rowOptions.onClick(row);
+							}}
+						>
 							{displayCount && <td>{index + 1}</td>}
 
 							{reviewedColumns.map((column) => (
 								<TableCell
-									key={`${row[uniqueValueColumn]}#${column.prop}`}
+									key={`${row[uniqueValueColumn]}#${column.prop}-${column.type}`}
 									row={row}
 									column={column}
 									data={sortedData}
@@ -91,7 +108,11 @@ export function Table({
 											className='action-button'
 											title={action.label}
 											aria-label={action.label}
-											onClick={() => void action.onClick?.(row)}
+											onClick={(ev) => {
+												ev.preventDefault();
+												ev.stopPropagation();
+												action.onClick?.(row);
+											}}
 											style={
 												{
 													'--color': action.color ?? 'var(--blue)',

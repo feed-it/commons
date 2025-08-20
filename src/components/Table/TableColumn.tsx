@@ -20,7 +20,6 @@ export default function TableColumn({
 	updateColumn,
 	deleteColumn,
 }: TableColumnProps) {
-	console.log('sortBy: ', sortBy);
 	const onChange = useCallback(
 		(ev: ChangeEvent<HTMLSelectElement>) => {
 			updateColumn(column.label, ev.target.value);

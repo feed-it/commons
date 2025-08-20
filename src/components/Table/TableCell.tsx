@@ -175,19 +175,6 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 		);
 	}
 
-	//* Specific to users
-	//* TODO: Do we really need to have this ?
-	if (column.prop.includes('group')) {
-		return (
-			<td
-				className={warning && 'warn'}
-				title={warning}
-			>
-				{value.split('/').at(-1)}
-			</td>
-		);
-	}
-
 	return (
 		<td
 			className={warning && 'warn'}
