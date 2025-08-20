@@ -1,0 +1,73 @@
+.rc-slider {
+	$trackSize: 7px;
+	$tooltipHeight: 25px;
+	z-index: 1;
+	position: relative;
+	padding: 5px 0;
+	width: 200px;
+	// Tracksize * 2 + tooltip & thumb gap + tooltip height +  arbitrary margin
+	height: $trackSize * 2 + 3px + $tooltipHeight + 10px !important;
+	border-radius: 6px;
+	touch-action: none;
+
+	& > .rc-slider-rail,
+	& > .rc-slider-track {
+		z-index: -1;
+		position: absolute;
+		top: 100%;
+		transform: translateY(calc(-100% - $trackSize / 2));
+		width: 100%;
+		height: $trackSize;
+		border-radius: $trackSize;
+		background-color: #ffffff;
+	}
+
+	& > .rc-slider-track {
+		background-color: #27b7c0;
+	}
+
+	& > .rc-slider-handle {
+		z-index: 1;
+		position: absolute;
+		top: 100%;
+		transform: translate(-50%, -100%) !important;
+		width: $trackSize * 2;
+		height: $trackSize * 2;
+		border: none;
+		border-radius: 50%;
+		background-color: #27b7c0;
+		cursor: grab;
+		box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+
+		& > .rc-slider-handle-tooltip {
+			position: absolute;
+			top: -3px;
+			left: 50%;
+			transform: translate(-50%, -100%);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 0 5px;
+			height: $tooltipHeight;
+			border-radius: 5px;
+			background-color: #ffffff;
+			box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+			color: #01445e;
+			user-select: none;
+
+			&::before {
+				content: "";
+				z-index: -9999999;
+				position: absolute;
+				top: 75%;
+				left: 50%;
+				display: block;
+				transform: translateX(-50%) rotate(45deg);
+				border: 10px solid #ffffff;
+				border-radius: 3px;
+				border-bottom: none;
+				border-right: none;
+			}
+		}
+	}
+}

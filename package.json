@@ -25,6 +25,7 @@
 		"@types/react": "^19.1.10",
 		"lodash.debounce": "^4.0.8",
 		"nodemon": "^3.1.10",
+		"rc-slider": "^11.1.8",
 		"react": "^19.1.1",
 		"rollup": "^4.46.2",
 		"rollup-plugin-dts": "^6.2.1",
