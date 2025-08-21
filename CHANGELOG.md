@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/feed-it/commons/compare/v1.5.0...v1.5.1) (2025-08-21)
+
+
+### Bug Fixes
+
+* **table:** thinner progress-bar ([39dab9d](https://github.com/feed-it/commons/commit/39dab9dea780d42e15fc466c0d5eb930ac0f2141))
+
 ## [1.5.0](https://github.com/feed-it/commons/compare/v1.4.0...v1.5.0) (2025-08-21)
 
 
