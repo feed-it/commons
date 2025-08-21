@@ -187,58 +187,65 @@ export default function useTable({ allowMismatch, columns, data, uniqueValueColu
 	}, [allowMismatch, columns, localData, uniqueValueColumn]);
 
 	// --------------------------------------------------- Custom ref ------------------------------------------------------
+	const getData = useCallback(() => {
+		const validData = [];
+		if (!reviewedColumns.some((x) => Object.hasOwn(x, 'error'))) {
+			for (const row of localData) {
+				if (!Object.hasOwn(row, 'warnings')) {
+					validData.push(row);
+					continue;
+				}
+			}
+		}
+
+		const errorOnNull = new Map();
+		const errorOnUnique = new Map();
+		const errorOnOthers = new Map();
+
+		for (const column of reviewedColumns) {
+			const prop = column.error?.type === 'mismatch' && column.error.target ? column.error.target : column.prop;
+
+			for (const row of localData) {
+				if (!(column.allowNull ?? true) && !row[prop] && !errorOnNull.has(row[uniqueValueColumn])) {
+					errorOnNull.set(row[uniqueValueColumn], row);
+				}
+
+				if (column.unique) {
+					const matches = localData.filter((x) => x[prop] === row[prop]).length;
+
+					if (matches > 1 && !errorOnUnique.has(row[uniqueValueColumn])) {
+						errorOnUnique.set(row[uniqueValueColumn], row);
+					}
+				}
+
+				if (typeof column.validate === 'function') {
+					if (column.validate(row[prop]) && !errorOnOthers.has(row[uniqueValueColumn])) {
+						errorOnOthers.set(row[uniqueValueColumn], row);
+					}
+				}
+			}
+		}
+
+		return {
+			data: localData,
+			validData,
+			errorOnNull: [...errorOnNull.values()],
+			errorOnUnique: [...errorOnUnique.values()],
+			errorOnOthers: [...errorOnOthers.values()],
+		};
+	}, [localData, reviewedColumns, uniqueValueColumn]);
+
+	const getColumns = useCallback(() => reviewedColumns, [reviewedColumns]);
+
 	useImperativeHandle(
 		ref,
 		() => {
-			const validData = [];
-			if (!reviewedColumns.some((x) => Object.hasOwn(x, 'error'))) {
-				for (const row of localData) {
-					if (!Object.hasOwn(row, 'warnings')) {
-						validData.push(row);
-						continue;
-					}
-				}
-			}
-
-			const errorOnNull = new Map();
-			const errorOnUnique = new Map();
-			const errorOnOthers = new Map();
-
-			for (const column of reviewedColumns) {
-				const prop =
-					column.error?.type === 'mismatch' && column.error.target ? column.error.target : column.prop;
-
-				for (const row of localData) {
-					if (!(column.allowNull ?? true) && !row[prop] && !errorOnNull.has(row[uniqueValueColumn])) {
-						errorOnNull.set(row[uniqueValueColumn], row);
-					}
-
-					if (column.unique) {
-						const matches = localData.filter((x) => x[prop] === row[prop]).length;
-
-						if (matches > 1 && !errorOnUnique.has(row[uniqueValueColumn])) {
-							errorOnUnique.set(row[uniqueValueColumn], row);
-						}
-					}
-
-					if (typeof column.validate === 'function') {
-						if (column.validate(row[prop]) && !errorOnOthers.has(row[uniqueValueColumn])) {
-							errorOnOthers.set(row[uniqueValueColumn], row);
-						}
-					}
-				}
-			}
-
 			return {
-				columns: reviewedColumns,
-				data: localData,
-				validData,
-				errorOnNull: [...errorOnNull.values()],
-				errorOnUnique: [...errorOnUnique.values()],
-				errorOnOthers: [...errorOnOthers.values()],
+				getColumns,
+				getData,
 			};
 		},
-		[localData, reviewedColumns]
+		[]
 	);
 
 	return {

@@ -35,10 +35,12 @@ export type Action = {
 };
 
 export type TableHandle = {
-	columns: ExtendedColumn[];
-	data: any[];
-	validData: any[];
-	errorOnNull: any[];
-	errorOnUnique: any[];
-	errorOnOthers: any[];
+	getColumns: () => ExtendedColumn[];
+	getData: () => {
+		data: any[];
+		validData: any[];
+		errorOnNull: any[];
+		errorOnUnique: any[];
+		errorOnOthers: any[];
+	};
 };
