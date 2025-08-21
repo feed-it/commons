@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.2](https://github.com/feed-it/commons/compare/v1.5.1...v1.5.2) (2025-08-21)
+
+
+### Bug Fixes
+
+* **table:** ref return object ([7bf9c33](https://github.com/feed-it/commons/commit/7bf9c3325be1a1979c58411b118618983dcb7105))
+
 ### [1.5.1](https://github.com/feed-it/commons/compare/v1.5.0...v1.5.1) (2025-08-21)
 
 
