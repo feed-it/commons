@@ -51,7 +51,7 @@ export function Table({
 						{displayCount && <th>#</th>}
 						{reviewedColumns.map((column) => (
 							<TableColumn
-								key={`headingColumn#${column.prop}`}
+								key={`headingColumn#${column.prop}-${column.type}`}
 								column={column}
 								sortingHeaders={sortingHeaders}
 								sortBy={sortBy}

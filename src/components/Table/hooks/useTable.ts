@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useImperativeHandle, useMemo, useState } from 'react';
+import { RefObject, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import { Column, ExtendedColumn, TableHandle } from '../types';
 import { misspelled } from '../utils/mispelled';
 
@@ -18,6 +18,10 @@ export type SortByType = {
 export default function useTable({ allowMismatch, columns, data, uniqueValueColumn, ref }: useTableProps) {
 	const [localData, setLocalData] = useState(data);
 	const [sortBy, setSortBy] = useState<SortByType | null>(null);
+
+	useEffect(() => {
+		setLocalData(data);
+	}, [data]);
 
 	const sortedData = useMemo(() => {
 		if (!sortBy) {
