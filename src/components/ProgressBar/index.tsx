@@ -21,6 +21,7 @@ export function ProgressBar({
 }: ProgressBarProps) {
 	const maxText = max === 100 ? '%' : `/${max}`;
 	const fillWidth = (value * 100) / max;
+	const height = label ? '1.5em' : '1em';
 
 	return (
 		<div className='progress-bar-container'>
@@ -45,6 +46,7 @@ export function ProgressBar({
 				style={
 					{
 						'--color': color,
+						height,
 					} as CSSProperties
 				}
 			>

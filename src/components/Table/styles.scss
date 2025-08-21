@@ -138,6 +138,10 @@
 						width: 100% !important;
 					}
 
+					& > .progress-bar-container > .progress-bar {
+						min-width: 150px;
+					}
+
 					& > .cell-input {
 						all: unset;
 						height: 100%;
