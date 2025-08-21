@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/feed-it/commons/compare/v1.4.0...v1.5.0) (2025-08-21)
+
+
+### Features
+
+* **table:** upgraded ui/ux of sort ([318b46b](https://github.com/feed-it/commons/commit/318b46bc4e59f280e3af5b62b29ecb326aa79916))
+
+
+### Bug Fixes
+
+* **table:** data prop don't re update localData ([83c428c](https://github.com/feed-it/commons/commit/83c428c6357096dfecf514f976a3893c60bfa520))
+
 ## [1.4.0](https://github.com/feed-it/commons/compare/v1.3.0...v1.4.0) (2025-08-20)
 
 
