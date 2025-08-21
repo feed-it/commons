@@ -1,13 +1,15 @@
 import { ChangeEvent, Dispatch, SetStateAction, useCallback } from 'react';
+import { Arrow } from '../assets/Arrow';
 import { Sort } from '../assets/Sort';
 import Trash from '../assets/Trash';
+import { SortByType } from './hooks/useTable';
 import { ExtendedColumn } from './types';
 
 type TableColumnProps = {
 	column: ExtendedColumn;
 	sortingHeaders: boolean;
-	sortBy?: string;
-	setSortBy: Dispatch<SetStateAction<string | undefined>>;
+	sortBy: SortByType | null;
+	setSortBy: Dispatch<SetStateAction<SortByType | null>>;
 	updateColumn: (oldColumn: string, newColumn: string) => void;
 	deleteColumn: (prop: string) => void;
 };
@@ -29,11 +31,21 @@ export default function TableColumn({
 
 	const onSortClick = useCallback(() => {
 		setSortBy((prev) => {
-			if (prev === column.prop) {
-				return undefined;
+			if (!prev || prev.prop !== column.prop) {
+				return {
+					prop: column.prop,
+					order: 'asc',
+				};
 			}
 
-			return column.prop;
+			if (prev.order === 'asc') {
+				return {
+					...prev,
+					order: 'desc',
+				};
+			}
+
+			return null;
 		});
 	}, []);
 
@@ -78,11 +90,15 @@ export default function TableColumn({
 							title='Trier la donnée'
 							aria-label='Trier la donnée'
 							style={{
-								opacity: sortBy === column.prop ? 1 : undefined,
+								opacity: sortBy?.prop === column.prop ? 1 : undefined,
 							}}
 							onClick={onSortClick}
 						>
-							<Sort />
+							{sortBy && sortBy.prop === column.prop ? (
+								<Arrow style={{ rotate: sortBy.order === 'asc' ? '-90deg' : '90deg' }} />
+							) : (
+								<Sort />
+							)}
 						</button>
 					)}
 
@@ -112,11 +128,15 @@ export default function TableColumn({
 						title='Trier la donnée'
 						aria-label='Trier la donnée'
 						style={{
-							opacity: sortBy === column.prop ? 1 : undefined,
+							opacity: sortBy?.prop === column.prop ? 1 : undefined,
 						}}
 						onClick={onSortClick}
 					>
-						<Sort />
+						{sortBy && sortBy.prop === column.prop ? (
+							<Arrow style={{ rotate: sortBy.order === 'asc' ? '-90deg' : '90deg' }} />
+						) : (
+							<Sort />
+						)}
 					</button>
 				)}
 			</div>

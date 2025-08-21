@@ -10,9 +10,14 @@ interface useTableProps {
 	ref?: RefObject<TableHandle>;
 }
 
+export type SortByType = {
+	prop: string;
+	order: 'asc' | 'desc';
+};
+
 export default function useTable({ allowMismatch, columns, data, uniqueValueColumn, ref }: useTableProps) {
 	const [localData, setLocalData] = useState(data);
-	const [sortBy, setSortBy] = useState<string>();
+	const [sortBy, setSortBy] = useState<SortByType | null>(null);
 
 	const sortedData = useMemo(() => {
 		if (!sortBy) {
@@ -25,7 +30,11 @@ export default function useTable({ allowMismatch, columns, data, uniqueValueColu
 			sensitivity: 'base',
 		});
 
-		return localData.toSorted((a, b) => collator.compare(a[sortBy], b[sortBy]));
+		if (sortBy.order === 'desc') {
+			return localData.toSorted((a, b) => collator.compare(b[sortBy.prop], a[sortBy.prop]));
+		}
+
+		return localData.toSorted((a, b) => collator.compare(a[sortBy.prop], b[sortBy.prop]));
 	}, [localData, sortBy]);
 
 	const updateData = useCallback(
