@@ -1,6 +1,9 @@
-import { useCallback, useState } from 'react';
+import { DependencyList, useCallback, useState } from 'react';
 
-export function usePromise(action: () => Promise<void>, deps: any[]) {
+export function usePromise<T extends () => Promise<void>>(
+	action: T,
+	deps: DependencyList
+): [() => Promise<void>, boolean, boolean, boolean] {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isSuccess, setIsSuccess] = useState(false);
 	const [isError, setIsError] = useState(false);
