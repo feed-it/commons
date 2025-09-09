@@ -48,7 +48,16 @@ export function Table({
 			<table>
 				<thead>
 					<tr>
-						{displayCount && <th>#</th>}
+						{displayCount && (
+							<th
+								style={{
+									padding: '5px',
+									textAlign: 'center',
+								}}
+							>
+								#
+							</th>
+						)}
 						{reviewedColumns.map((column) => (
 							<TableColumn
 								key={`headingColumn#${column.prop}-${column.type}`}
@@ -64,84 +73,93 @@ export function Table({
 					</tr>
 				</thead>
 				<tbody>
-					{sortedData.map((row, index) => (
-						<tr
-							key={row[uniqueValueColumn]}
-							style={
-								rowOptions?.disableProp && row[rowOptions.disableProp]
-									? {
-											opacity: 0.3,
-									  }
-									: undefined
-							}
-							onClick={() => {
-								if (rowOptions?.onClick) rowOptions.onClick(row);
-							}}
-						>
-							{displayCount && <td>{index + 1}</td>}
-
-							{reviewedColumns.map((column) => (
-								<TableCell
-									key={`${row[uniqueValueColumn]}#${column.prop}-${column.type}`}
-									row={row}
-									column={column}
-									data={sortedData}
-									allowMismatch
-									onChange={(value) =>
-										void updateData(
-											row[uniqueValueColumn],
-											column.error?.type === 'mismatch' && column.error.target
-												? column.error.target
-												: column.prop,
-											value
-										)
-									}
-								/>
-							))}
-
-							{(actions.length > 0 || canDeleteRows) && (
-								<td>
-									{actions.map((action) => (
-										<button
-											key={action.label}
-											type='button'
-											className='action-button'
-											title={action.label}
-											aria-label={action.label}
-											onClick={(ev) => {
-												ev.preventDefault();
-												ev.stopPropagation();
-												action.onClick?.(row);
-											}}
-											style={
-												{
-													'--color': action.color ?? 'var(--blue)',
-												} as CSSProperties
-											}
-										>
-											{typeof action.icon === 'function' ? action.icon() : action.icon}
-										</button>
-									))}
-									{canDeleteRows && (
-										<button
-											type='button'
-											className='action-button'
-											title='Supprimer la ligne'
-											aria-label='Supprimer la ligne'
-											onClick={() => void deleteRow(row[uniqueValueColumn])}
-											style={
-												{
-													'--color': 'var(--red)',
-												} as CSSProperties
-											}
-										>
-											<Trash />
-										</button>
-									)}
-								</td>
-							)}
-						</tr>
-					))}
+				{sortedData.map((row, index) => (
+					<tr
+						key={row[uniqueValueColumn]}
+						style={
+							rowOptions?.disableProp && row[rowOptions.disableProp]
+								? {
+									opacity: 0.3,
+								}
+								: undefined
+						}
+						onClick={() => {
+							if (rowOptions?.onClick) rowOptions.onClick(row);
+						}}
+					>
+						{displayCount && (
+							<td
+								style={{
+									padding: '5px',
+									textAlign: 'center',
+								}}
+							>
+								{index + 1}
+							</td>
+						)}
+						
+						{reviewedColumns.map((column) => (
+							<TableCell
+								key={`${row[uniqueValueColumn]}#${column.prop}-${column.type}`}
+								row={row}
+								column={column}
+								data={sortedData}
+								allowMismatch
+								onChange={(value) =>
+									void updateData(
+										row[uniqueValueColumn],
+										column.error?.type === 'mismatch' && column.error.target
+											? column.error.target
+											: column.prop,
+										value
+									)
+								}
+							/>
+						))}
+						
+						{(actions.length > 0 || canDeleteRows) && (
+							<td>
+								{actions.map((action) => (
+									<button
+										key={action.label}
+										type='button'
+										className='action-button'
+										title={action.label}
+										aria-label={action.label}
+										onClick={(ev) => {
+											ev.preventDefault();
+											ev.stopPropagation();
+											action.onClick?.(row);
+										}}
+										style={
+											{
+												'--color': action.color ?? 'var(--blue)',
+											} as CSSProperties
+										}
+									>
+										{typeof action.icon === 'function' ? action.icon() : action.icon}
+									</button>
+								))}
+								{canDeleteRows && (
+									<button
+										type='button'
+										className='action-button'
+										title='Supprimer la ligne'
+										aria-label='Supprimer la ligne'
+										onClick={() => void deleteRow(row[uniqueValueColumn])}
+										style={
+											{
+												'--color': 'var(--red)',
+											} as CSSProperties
+										}
+									>
+										<Trash />
+									</button>
+								)}
+							</td>
+						)}
+					</tr>
+				))}
 				</tbody>
 			</table>
 		</div>
