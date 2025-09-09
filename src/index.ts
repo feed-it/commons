@@ -9,3 +9,4 @@ export * from './components/Table/Table';
 export * from './hooks/useDebounce';
 export * from './hooks/useHorizontalScroll';
 export * from './hooks/useOutsideClick';
+export * from './hooks/usePromise';
