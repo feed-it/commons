@@ -22,16 +22,16 @@
 		"@rollup/plugin-terser": "^0.4.4",
 		"@rollup/plugin-typescript": "^12.1.4",
 		"@types/lodash.debounce": "^4.0.9",
-		"@types/react": "^19.1.10",
+		"@types/react": "^19.1.12",
 		"lodash.debounce": "^4.0.8",
 		"nodemon": "^3.1.10",
 		"rc-slider": "^11.1.8",
 		"react": "^19.1.1",
-		"rollup": "^4.46.2",
-		"rollup-plugin-dts": "^6.2.1",
+		"rollup": "^4.50.1",
+		"rollup-plugin-dts": "^6.2.3",
 		"rollup-plugin-peer-deps-external": "^2.2.4",
 		"rollup-plugin-postcss": "^4.0.2",
-		"sass": "^1.90.0",
+		"sass": "^1.92.1",
 		"standard-version": "^9.5.0",
 		"tslib": "^2.8.1",
 		"typescript": "^5.9.2"
@@ -39,5 +39,5 @@
 	"publishConfig": {
 		"@feed-it:registry": "https://npm.pkg.github.com"
 	},
-	"packageManager": "pnpm@10.14.0"
+	"packageManager": "pnpm@10.15.1"
 }
