@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/feed-it/commons/compare/v1.5.2...v1.6.0) (2025-09-09)
+
+
+### Features
+
+* **hook:** usePromise hook ([6c42ec4](https://github.com/feed-it/commons/commit/6c42ec4b8ed50dd7377f6b8c3ebfc86be13a9be7))
+
 ### [1.5.2](https://github.com/feed-it/commons/compare/v1.5.1...v1.5.2) (2025-08-21)
 
 
