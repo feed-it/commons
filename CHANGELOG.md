@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.1](https://github.com/feed-it/commons/compare/v1.6.0...v1.6.1) (2025-09-09)
+
+
+### Bug Fixes
+
+* **usepromise:** fix types ([e2059bf](https://github.com/feed-it/commons/commit/e2059bf11a31b20339cc8be5dd3deb0c308ea849))
+
 ## [1.6.0](https://github.com/feed-it/commons/compare/v1.5.2...v1.6.0) (2025-09-09)
 
 
