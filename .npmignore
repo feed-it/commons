@@ -1,6 +1,6 @@
 .github
 .prettierignore
-.prettierrc
+.prettierrc.json
 .versionrc
 .versionrc.js
 CHANGELOG.md
@@ -11,3 +11,4 @@ package-lock.json
 rollup.config.js
 src
 tsconfig.json
+eslint.config.mjs
