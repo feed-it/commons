@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/feed-it/commons/compare/v1.6.2...v1.7.0) (2025-09-10)
+
+
+### Features
+
+* **eslint:** added eslint and exportable eslint custom rules ([7474340](https://github.com/feed-it/commons/commit/7474340b530f6eaf29cf5244670375ed49d35b24))
+
+
+### Bug Fixes
+
+* **table:** missing outline border ([3c6cf69](https://github.com/feed-it/commons/commit/3c6cf69ab0f676d00493dd0a9c694685d2e6ea44))
+
 ### [1.6.2](https://github.com/feed-it/commons/compare/v1.6.1...v1.6.2) (2025-09-09)
 
 
