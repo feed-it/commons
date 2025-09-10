@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.2](https://github.com/feed-it/commons/compare/v1.7.1...v1.7.2) (2025-09-10)
+
+
+### Bug Fixes
+
+* **table:** valid data populate when mismatch columns exists + style ([f8670bf](https://github.com/feed-it/commons/commit/f8670bf51860334e8036e81913702c3f4c5140ad))
+
 ### [1.7.1](https://github.com/feed-it/commons/compare/v1.7.0...v1.7.1) (2025-09-10)
 
 
