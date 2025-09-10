@@ -1,7 +1,12 @@
 {
-	"ignore": [".git", ".github", "dist", "node_modules"],
+	"ignore": [
+		".git",
+		".github",
+		"dist",
+		"node_modules"
+	],
 	"ext": "ts, tsx, js, jsx, json, scss",
 	"events": {
-		"restart": "pnpm run rollup"
+		"restart": "pnpm run lint &&  pnpm run rollup"
 	}
 }
