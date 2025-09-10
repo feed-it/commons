@@ -74,7 +74,7 @@ export const misspelled = {
 		let columnsModel = Object.keys(model);
 		const firstElt = json[0];
 
-		for (let key in firstElt) {
+		for (const key in firstElt) {
 			let stopResearchHere = false;
 
 			//* 0. Look for exact match -----------------------------------------------------------
@@ -118,9 +118,9 @@ export const misspelled = {
 		return json;
 	},
 	makeCorrectedOutputOnly(output: BasicObject[], model: Model) {
-		let outputToReturn: BasicObject = {};
-		let columnsModel = Object.keys(model);
-		let wrongProps: BasicObject = {};
+		const outputToReturn: BasicObject = {};
+		const columnsModel = Object.keys(model);
+		const wrongProps: BasicObject = {};
 
 		for (const elt of output.slice(0, 1)) {
 			for (const prop in elt) {

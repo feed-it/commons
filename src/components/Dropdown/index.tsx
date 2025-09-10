@@ -115,7 +115,9 @@ export function Dropdown({
 								checked={option.value === selectedValue?.value}
 								onChange={() => {
 									setSelectedValue(option);
-									typeof onChange === 'function' && onChange(option.value);
+									if (typeof onChange === 'function') {
+										onChange(option.value);
+									}
 								}}
 							/>
 

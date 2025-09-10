@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { ButtonHTMLAttributes, CSSProperties } from 'react';
 import './styles.scss';
 
 export type ButtonProps = {
@@ -21,7 +21,7 @@ export function Button({
 	rounded = false,
 	children,
 	...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps) {
+}: ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps) {
 	return (
 		<button
 			{...props}

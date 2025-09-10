@@ -10,7 +10,7 @@ export type EnhancedTableProps = TableProps & {
 		label: string;
 		onClick?: MouseEventHandler<HTMLButtonElement>;
 		color?: string;
-		icon?: () => JSX.Element | JSX.Element;
+		icon?: (() => JSX.Element) | JSX.Element;
 	}[];
 	searchbar?: boolean;
 	footer?: boolean;
@@ -18,26 +18,24 @@ export type EnhancedTableProps = TableProps & {
 };
 
 export function EnhancedTable({
-	headerButtons = [],
-	searchbar = true,
-	footer = true,
-	refresh,
-	...tableProps
-}: EnhancedTableProps) {
+								  headerButtons = [],
+								  refresh,
+								  ...tableProps
+							  }: EnhancedTableProps) {
 	return (
-		<div className='enhanced-table-container'>
-			<div className='enhanced-table-header'>
+		<div className="enhanced-table-container">
+			<div className="enhanced-table-header">
 				<Searchbar />
-
+				
 				{refresh && (
 					<Button
-						type='button'
-						title='Rafraîchir les données'
-						aria-title='Rafraîchir les données'
-						color='var(--dark-gray)'
-						textColor='var(--dark-gray)'
-						hoverColor='var(--blue)'
-						textHoverColor='var(--white)'
+						type="button"
+						title="Rafraîchir les données"
+						aria-title="Rafraîchir les données"
+						color="var(--dark-gray)"
+						textColor="var(--dark-gray)"
+						hoverColor="var(--blue)"
+						textHoverColor="var(--white)"
 						outline
 						squared
 						onClick={refresh}
@@ -45,12 +43,13 @@ export function EnhancedTable({
 						<Refresh />
 					</Button>
 				)}
-
+				
 				{headerButtons.length > 0 && (
-					<div className='header-buttons-container'>
+					<div className="header-buttons-container">
 						{headerButtons.map((button) => (
 							<Button
-								type='button'
+								key={crypto.randomUUID()}
+								type="button"
 								color={button.color}
 								onClick={button.onClick}
 							>
@@ -61,7 +60,7 @@ export function EnhancedTable({
 					</div>
 				)}
 			</div>
-
+			
 			<Table {...tableProps} />
 		</div>
 	);

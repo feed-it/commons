@@ -21,6 +21,7 @@ export function usePromise<T extends () => Promise<void>>(
 
 		setIsSuccess(true);
 		setIsLoading(false);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [action, ...deps]);
 
 	return [callback, isLoading, isSuccess, isError];

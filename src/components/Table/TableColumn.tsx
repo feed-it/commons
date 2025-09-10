@@ -47,7 +47,7 @@ export default function TableColumn({
 
 			return null;
 		});
-	}, []);
+	}, [column, setSortBy]);
 
 	if (column.error) {
 		return (

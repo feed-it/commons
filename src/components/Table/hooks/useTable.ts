@@ -90,12 +90,10 @@ export default function useTable({ allowMismatch, columns, data, uniqueValueColu
 
 	const deleteColumn = useCallback((prop: string) => {
 		setLocalData((prev) => {
-			const result = prev.map((row) => {
+			return prev.map((row) => {
 				delete row[prop];
 				return row;
 			});
-
-			return result;
 		});
 	}, []);
 
@@ -245,7 +243,7 @@ export default function useTable({ allowMismatch, columns, data, uniqueValueColu
 				getData,
 			};
 		},
-		[]
+		[getColumns, getData]
 	);
 
 	return {
