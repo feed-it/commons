@@ -120,9 +120,12 @@
 				}
 				
 				& > td {
-					border-left: 1px solid color-mix(in srgb, var(--lightest-gray) 50%, transparent);
 					color: var(--darkest-gray);
 					text-wrap: nowrap;
+					
+					&:not(:first-child) {
+						border-left: 1px solid color-mix(in srgb, var(--lightest-gray) 50%, transparent);
+					}
 					
 					&.warn {
 						background-color: color-mix(in srgb, var(--red) 50%, transparent);
