@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/feed-it/commons/compare/v1.9.0...v1.10.0) (2025-09-11)
+
+
+### Features
+
+* **provider:** global css variables & styles provider ([6f7bd75](https://github.com/feed-it/commons/commit/6f7bd75f6589ae02f00074f4d82f117ada7155c4))
+* **toggle-button:** created component ([f4f4a5d](https://github.com/feed-it/commons/commit/f4f4a5d9827051814cf6cbd79c801a404f3185a3))
+
 ## [1.9.0](https://github.com/feed-it/commons/compare/v1.8.0...v1.9.0) (2025-09-11)
 
 
