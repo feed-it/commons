@@ -1,0 +1,38 @@
+.toggle-button {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 40px;
+	height: 1.5rem;
+	border: 1px solid #9896a7;
+	border-radius: 2rem;
+	background-color: #f15d5b;
+	cursor: pointer;
+	overflow: hidden;
+	transition: background-color 0.3s ease, transform 0.3s ease, filter 0.3s ease;
+	
+	&:hover {
+		filter: brightness(1.1);
+	}
+	
+	& > .toggle-indicator {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		aspect-ratio: 1;
+		border-radius: 50%;
+		background-color: var(--white);
+		transition: left 0.3s ease, transform 0.3s ease;
+	}
+	
+	&[aria-checked="true"] {
+		background-color: var(--green);
+		
+		& > .toggle-indicator {
+			left: 100%;
+			transform: translateX(-100%);
+		}
+	}
+	
+}

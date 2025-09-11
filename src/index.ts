@@ -6,6 +6,7 @@ export * from './components/ProgressBar';
 export * from './components/Searchbar/Searchbar';
 export * from './components/Slider/Slider';
 export * from './components/Table';
+export * from './components/ToggleButton';
 
 export * from './hooks/useDebounce';
 export * from './hooks/useHorizontalScroll';
