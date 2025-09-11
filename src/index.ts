@@ -1,4 +1,5 @@
 export * from './components/Button';
+export * from './components/Checkbox';
 export * from './components/Dropdown';
 export * from './components/EnhancedTable/EnhancedTable';
 export * from './components/ProgressBar';
