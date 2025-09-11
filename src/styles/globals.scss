@@ -1,0 +1,109 @@
+:root {
+	/* ----------------------------------------------------- Colors ----------------------------------------------------- */
+	--blue: #01445e;
+	--cyan: #27b7c0;
+	--red: #f15d5b;
+	--yellow: #f1bf5c;
+	--green: #0cb26a;
+	
+	--white: #ffffff;
+	
+	--lightest-gray: #dedede;
+	--light-gray: #c8cace;
+	--dark-gray: #9896a7;
+	--darkest-gray: #4d4b59;
+	
+	--black: #303030;
+	
+	/* ----------------------------------------------------- Borders ---------------------------------------------------- */
+	--border-radius: 5px;
+	
+	/* --------------------------------------------------- Box Shadows -------------------------------------------------- */
+	--light-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	--big-shadow: 0 1px 3px rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+	
+	/* ---------------------------------------------------- Outlines ---------------------------------------------------- */
+	--outline: 2px solid var(--darkest-gray);
+	
+	/* ---------------------------------------------------- Toastify ---------------------------------------------------- */
+	--toastify-color-info: var(--cyan);
+	--toastify-color-success: var(--green);
+	--toastify-color-warning: var(--yellow);
+	--toastify-color-error: var(--red);
+	
+	// Allowing to transition from values to instrinct keywords like auto, fit-content, max-content and min-content
+	interpolate-size: allow-keywords;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Roboto", sans-serif;
+	appearance: none;
+	outline: none;
+}
+
+html,
+body {
+	width: 100svw;
+	height: 100svh;
+	background-color: var(--blue);
+	font-size: 14px;
+	overflow: hidden;
+}
+
+button {
+	font-size: 1rem;
+	font-weight: normal;
+	user-select: none;
+	cursor: pointer;
+	
+	&:disabled {
+		cursor: default;
+	}
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+	-webkit-appearance: none;
+}
+
+@media screen and (min-width: 768px) {
+	/* scrollbar styling non-standard version */
+	*::-webkit-scrollbar {
+		width: 16px;
+		background-color: transparent;
+		border-radius: 15px;
+		cursor: pointer;
+	}
+	
+	*::-webkit-scrollbar-thumb {
+		border: 5px solid rgba(0, 0, 0, 0);
+		border-radius: 15px;
+		min-height: 50px;
+		background-color: #dedede;
+		background-clip: padding-box;
+		cursor: pointer;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	/* scrollbar styling non-standard version */
+	*::-webkit-scrollbar {
+		width: 5px;
+		height: 5px;
+		background-color: #dedede;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	
+	*::-webkit-scrollbar-thumb {
+		background: #969696;
+		border-radius: 5px;
+		min-height: 50px;
+		cursor: pointer;
+	}
+}
