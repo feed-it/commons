@@ -1,0 +1,79 @@
+.pagination {
+	display: flex;
+	border: 1px solid var(--lightest-gray);
+	border-radius: var(--border-radius);
+	background-color: var(--white);
+	width: max-content;
+	height: max-content;
+	overflow: hidden;
+	
+	& > .pagination-button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 5px;
+		height: 100%;
+		aspect-ratio: 1;
+		border: none;
+		background-color: transparent;
+		color: var(--darkest-gray);
+		transition: background-color .3s ease, color .3s ease;
+		
+		&:not(:first-child) {
+			border-left: 1px solid var(--lightest-gray);
+		}
+		
+		&:disabled {
+			background-color: color-mix(in srgb, var(--lightest-gray) 40%, transparent);
+			cursor: not-allowed;
+		}
+		
+		&:not(:disabled) {
+			&:focus,
+			&:hover {
+				background-color: color-mix(in srgb, var(--lightest-gray) 20%, transparent);
+				color: var(--blue);
+			}
+		}
+		
+		& > svg {
+			width: 1.5rem;
+		}
+	}
+	
+	& > .custom-page-input {
+		display: flex;
+		align-items: center;
+		border-left: 1px solid var(--lightest-gray);
+		background-color: color-mix(in srgb, var(--lightest-gray) 20%, transparent);
+		
+		& > input {
+			height: 100%;
+			padding: 5px 10px;
+			min-width: 3ch;
+			border: none;
+			background-color: var(--white);
+			text-align: center;
+			color: var(--blue);
+			transition: color .3s ease;
+			
+			// Hide default browser arrows
+			-moz-appearance: textfield;
+			
+			&::-webkit-outer-spin-button,
+			&::-webkit-inner-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+			}
+			
+			&:focus {
+				color: var(--blue)
+			}
+		}
+		
+		& > p {
+			padding: 5px 10px;
+			color: var(--darkest-gray);
+		}
+	}
+}
