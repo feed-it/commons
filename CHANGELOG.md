@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://github.com/feed-it/commons/compare/v1.10.0...v1.11.0) (2025-09-12)
+
+
+### Features
+
+* **pagination:** created component and added it to table component ([7f8bb67](https://github.com/feed-it/commons/commit/7f8bb6797141ba0db9690805c70a49f4c7381cd2))
+
 ## [1.10.0](https://github.com/feed-it/commons/compare/v1.9.0...v1.10.0) (2025-09-11)
 
 
