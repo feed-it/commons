@@ -115,7 +115,52 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 		return undefined;
 	}, [column, data, value]);
 
-	if (column.type === 'gauge') {
+	const columnType = useMemo(() => {
+		if (column.type === 'auto') {
+			if (!value) {
+				return 'string';
+			}
+
+			if (typeof value === 'number') {
+				return 'number';
+			}
+
+			if (typeof value === 'boolean') {
+				return 'checkbox';
+			}
+
+			if (value.match(/(true|false)/i)) {
+				return 'checkbox';
+			}
+			if (!isNaN(parseFloat(value))) {
+				return 'number';
+			}
+
+			return 'string';
+		}
+
+		if (column.type === 'auto-non-numeric') {
+			if (!value) return 'string';
+
+			if (typeof value === 'number') {
+				return 'string';
+			}
+
+			if (typeof value === 'boolean') {
+				return 'checkbox';
+			}
+
+			if (value.match(/(true|false)/i)) {
+				return 'checkbox';
+			}
+
+			return 'string';
+		}
+
+		return column.type;
+	}, [column.type, value]);
+
+	if (columnType === 'gauge') {
 		return (
 			<td>
 				<ProgressBar
@@ -131,7 +176,7 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 	}
 
 	if (column.editable ?? true) {
-		if (column.type === 'select') {
+		if (columnType === 'select') {
 			let values;
 			if (typeof column.values === 'function') {
 				values = column.values(row);
@@ -156,6 +201,26 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 			);
 		}
 
+		if (columnType === 'checkbox') {
+			return (
+				<td
+					className={warning && 'warn'}
+					title={warning}
+				>
+					<input
+						name={column.prop}
+						aria-label={column.label}
+						type={columnType}
+						className='cell-input'
+						defaultChecked={value}
+						autoComplete='off'
+						required
+						onChange={(ev) => void onChange(ev.target.value)}
+					/>
+				</td>
+			);
+		}
+
 		return (
 			<td
 				className={warning && 'warn'}
@@ -164,12 +229,32 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 				<input
 					name={column.prop}
 					aria-label={column.label}
-					type={column.type}
+					type={columnType}
 					className='cell-input'
 					defaultValue={value}
 					autoComplete='off'
 					required
 					onChange={(ev) => void onChange(ev.target.value)}
+				/>
+			</td>
+		);
+	}
+
+	if (columnType === 'checkbox') {
+		return (
+			<td
+				className={warning && 'warn'}
+				title={warning}
+			>
+				<input
+					name={column.prop}
+					aria-label={column.label}
+					type={columnType}
+					className='cell-input'
+					checked={value}
+					autoComplete='off'
+					readOnly
+					required
 				/>
 			</td>
 		);

@@ -3,7 +3,18 @@ import { HTMLInputTypeAttribute, JSX } from 'react';
 export type Column = {
 	label: string;
 	prop: string;
-	type: 'select' | 'gauge' | HTMLInputTypeAttribute;
+	/**
+	 * `auto`: auto-detect each value type : boolean, string or number.
+	 *
+	 * `auto-non-numeric`: same as `auto` but number will be treated as string.
+	 *
+	 * `select`: will show a dropdown selector instead of an input.
+	 *
+	 * `gauge`: cannot be editable ! will show a progressbar.
+	 *
+	 * all other available values are the ones from HTML input type property.
+	 */
+	type: 'auto' | 'auto-non-numeric' | 'select' | 'gauge' | HTMLInputTypeAttribute;
 
 	values?: { label: string; value: string }[] | ((row: any) => { label: string; value: string }[]);
 	allowNull?: boolean;
