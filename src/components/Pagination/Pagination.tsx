@@ -1,6 +1,7 @@
 import Chevron from '../assets/Chevron';
 import './styles.scss';
 import { useRef } from 'react';
+import Skip from '../assets/Skip';
 
 export type PaginationProps = {
 	value: number;
@@ -42,9 +43,9 @@ export function Pagination({ value, max, onChange = () => {}, elevation = false 
 				title='Aller à la première page'
 				aria-label='Aller à la première page'
 			>
-				<Chevron
+				<Skip
 					style={{
-						rotate: '90deg',
+						rotate: '180deg',
 					}}
 				/>
 			</button>
@@ -98,11 +99,7 @@ export function Pagination({ value, max, onChange = () => {}, elevation = false 
 				title='Aller à la dernière page'
 				aria-label='Aller à la dernière page'
 			>
-				<Chevron
-					style={{
-						rotate: '-90deg',
-					}}
-				/>
+				<Skip />
 			</button>
 		</div>
 	);
