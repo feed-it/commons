@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.12.1](https://github.com/feed-it/commons/compare/v1.12.0...v1.12.1) (2025-09-15)
+
+
+### Bug Fixes
+
+* **eslint:** change to mjs file extension to avoid node/vite warnings ([4e81c15](https://github.com/feed-it/commons/commit/4e81c15ae8c51abdc94714f880e2c1fb4dfd0333))
+
 ## [1.12.0](https://github.com/feed-it/commons/compare/v1.11.0...v1.12.0) (2025-09-15)
 
 
