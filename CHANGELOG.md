@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0](https://github.com/feed-it/commons/compare/v1.11.0...v1.12.0) (2025-09-15)
+
+
+### Features
+
+* **table:** auto and auto-non-numeric value for column type property ([b46c5ca](https://github.com/feed-it/commons/commit/b46c5ca0fe243f045e5709e6065eed7661292ddd))
+
 ## [1.11.0](https://github.com/feed-it/commons/compare/v1.10.0...v1.11.0) (2025-09-12)
 
 
