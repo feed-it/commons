@@ -8,9 +8,11 @@ export type SliderProps = {
 	values: number[];
 	selectedValues: number[];
 	onChange: (values: number[]) => void;
+	step?: number;
+	vertical?: boolean;
 };
 
-export function Slider({ values = [], selectedValues = [], onChange }: SliderProps) {
+export function Slider({ values = [], selectedValues = [], onChange, step = 1, vertical = false }: SliderProps) {
 	const { defaultValues, minMaxValues } = useData({ values, selectedValues });
 
 	const { handleChange } = useActions({ minMaxValues, onChange });
@@ -28,16 +30,16 @@ export function Slider({ values = [], selectedValues = [], onChange }: SliderPro
 
 	return (
 		<RCSlider
-			className='filter-slider'
 			range
 			min={minMaxValues.min}
 			max={minMaxValues.max}
-			step={1}
+			step={step}
 			value={defaultValues}
 			pushable
 			keyboard
 			handleRender={renderThumb}
 			onChange={handleChange}
+			vertical={vertical}
 		/>
 	);
 }
