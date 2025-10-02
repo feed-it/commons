@@ -82,7 +82,13 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 		//* Unique
 		if (column.unique ?? false) {
 			const prop = column.error?.type === 'mismatch' && column.error.target ? column.error.target : column.prop;
-			const values = data.map((x) => x[prop]);
+			let values = [];
+
+			if (column.allowNull ?? true) {
+				values = data.map((x) => x[prop]).filter((x) => x || `${x}`.length > 0);
+			} else {
+				values = data.map((x) => x[prop]);
+			}
 
 			let sameValues = 0;
 
