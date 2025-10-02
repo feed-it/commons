@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.12.4](https://github.com/feed-it/commons/compare/v1.12.3...v1.12.4) (2025-10-02)
+
+
+### Bug Fixes
+
+* **table:** allowNull with unique should only take setted value to compare ([66e6372](https://github.com/feed-it/commons/commit/66e6372f684c077877738e777edeb3fcee8cf0d2))
+
 ### [1.12.3](https://github.com/feed-it/commons/compare/v1.12.2...v1.12.3) (2025-10-01)
 
 ### [1.12.2](https://github.com/feed-it/commons/compare/v1.12.1...v1.12.2) (2025-09-15)
