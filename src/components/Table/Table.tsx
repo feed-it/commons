@@ -181,7 +181,6 @@ function renderRow(
 					row={row}
 					column={column}
 					data={sortedData}
-					allowMismatch
 					onChange={(value) =>
 						void updateData(
 							row[uniqueValueColumn],

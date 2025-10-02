@@ -16,7 +16,7 @@ export type Column = {
 	 */
 	type: 'auto' | 'auto-non-numeric' | 'select' | 'gauge' | HTMLInputTypeAttribute;
 
-	values?: { label: string; value: string }[] | ((row: any) => { label: string; value: string }[]);
+	values?: string[] | { label: string; value: string }[] | ((row: any) => { label: string; value: string }[]);
 	allowNull?: boolean;
 	editable?: boolean;
 	unique?: boolean | 'base' | 'case';

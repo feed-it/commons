@@ -7,11 +7,10 @@ type TableCellProps = {
 	row: any;
 	column: ExtendedColumn;
 	data: any[];
-	allowMismatch: boolean;
 	onChange: (value: string) => void;
 };
 
-export default function TableCell({ row, column, data, allowMismatch = false, onChange }: TableCellProps) {
+export default function TableCell({ row, column, data, onChange }: TableCellProps) {
 	const value = useMemo(() => {
 		//* Below exactMatch prevent potentialValue to return a value before the exact match could be found
 		//* Because find method loop one by one array data
@@ -40,29 +39,22 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 		});
 
 		if (exactMatch) {
-			if (typeof exactMatch === 'object') return exactMatch.value;
+			if (typeof exactMatch === 'object' && !!exactMatch) return exactMatch.value;
 			return exactMatch ?? null;
 		}
 
 		const potentialValue = values.find((v) => {
 			//* Case when v (available value) is from type: {label: string; value: any}
 			if (typeof v === 'object') {
-				if (allowMismatch) {
-					return `${v.value}`.toLowerCase().includes(`${initialValue}`.toLowerCase());
-				}
-
-				return v.value === initialValue;
+				return `${v.value}`.toLowerCase().includes(`${initialValue}`.toLowerCase());
 			}
 
-			if (allowMismatch) {
-				return `${v}`.toLowerCase().includes(`${initialValue}`.toLowerCase());
-			}
-			return v === initialValue;
+			return `${v}`.toLowerCase().includes(`${initialValue}`.toLowerCase());
 		});
 
-		if (typeof potentialValue === 'object') return potentialValue.value;
+		if (typeof potentialValue === 'object' && !!potentialValue) return potentialValue.value;
 		return potentialValue ?? null;
-	}, [allowMismatch, column, row]);
+	}, [column, row]);
 
 	useEffect(() => {
 		const prop = column.error?.type === 'mismatch' && column.error.target ? column.error.target : column.prop;
@@ -85,6 +77,8 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 			let values = [];
 
 			if (column.allowNull ?? true) {
+				if (!value || `${value}`.length === 0) return undefined;
+
 				values = data.map((x) => x[prop]).filter((x) => x || `${x}`.length > 0);
 			} else {
 				values = data.map((x) => x[prop]);
@@ -183,11 +177,18 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 
 	if (column.editable ?? true) {
 		if (columnType === 'select') {
-			let values;
+			let values: { label: string; value: string }[];
 			if (typeof column.values === 'function') {
 				values = column.values(row);
+			} else if (!column.values) {
+				values = [];
+			} else if (typeof column.values[0] === 'string') {
+				values = (column.values as string[]).map((x) => ({
+					label: x,
+					value: x,
+				}));
 			} else {
-				values = column.values;
+				values = column.values as { label: string; value: string }[];
 			}
 
 			return (
@@ -200,7 +201,7 @@ export default function TableCell({ row, column, data, allowMismatch = false, on
 						title='-'
 						defaultValue={value}
 						onChange={onChange}
-						values={values ?? []}
+						values={values}
 						legacyDropdown
 					/>
 				</td>
