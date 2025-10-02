@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.13.0](https://github.com/feed-it/commons/compare/v1.12.6...v1.13.0) (2025-10-02)
+
+
+### Features
+
+* **slider:** refacto ([3236cc1](https://github.com/feed-it/commons/commit/3236cc1c7fdf3f903a2e0e890972ddfc92b69a5d))
+
 ### [1.12.6](https://github.com/feed-it/commons/compare/v1.12.5...v1.12.6) (2025-10-02)
 
 
