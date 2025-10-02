@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.12.6](https://github.com/feed-it/commons/compare/v1.12.5...v1.12.6) (2025-10-02)
+
+
+### Bug Fixes
+
+* **types:** allow array of string as value of 'values' ([166ccd7](https://github.com/feed-it/commons/commit/166ccd71be8af7e0e71c89161e0edfca244591cf))
+
 ### [1.12.5](https://github.com/feed-it/commons/compare/v1.12.4...v1.12.5) (2025-10-02)
 
 ### [1.12.4](https://github.com/feed-it/commons/compare/v1.12.3...v1.12.4) (2025-10-02)
