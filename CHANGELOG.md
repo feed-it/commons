@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.13.1](https://github.com/feed-it/commons/compare/v1.13.0...v1.13.1) (2025-10-21)
+
+
+### Bug Fixes
+
+* **table:** correct data props in getData function result ([b228e2d](https://github.com/feed-it/commons/commit/b228e2d31c79acd71f889e6799c440640f4b9526))
+
 ## [1.13.0](https://github.com/feed-it/commons/compare/v1.12.6...v1.13.0) (2025-10-02)
 
 
