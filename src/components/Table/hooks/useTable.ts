@@ -1,6 +1,7 @@
 import { RefObject, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import { Column, ExtendedColumn, TableHandle } from '../types';
 import { misspelled } from '../utils/mispelled';
+import { correctRow, correctRows } from '../utils/correction';
 
 interface useTableProps {
 	allowMismatch: boolean;
@@ -221,9 +222,11 @@ export default function useTable({ allowMismatch, columns, data, pagination, uni
 		const validData = [];
 		if (!reviewedColumns.some((x) => Object.hasOwn(x, 'error') && x.error?.type !== 'mismatch')) {
 			for (const row of localData) {
-				if (!Object.hasOwn(row, 'warnings')) {
-					validData.push(row);
+				if (Object.hasOwn(row, 'warnings')) {
+					continue;
 				}
+
+				validData.push(correctRow(reviewedColumns, row));
 			}
 		}
 
@@ -256,11 +259,12 @@ export default function useTable({ allowMismatch, columns, data, pagination, uni
 		}
 
 		return {
-			data: localData,
-			validData,
-			errorOnNull: [...errorOnNull.values()],
-			errorOnUnique: [...errorOnUnique.values()],
-			errorOnOthers: [...errorOnOthers.values()],
+			source: localData,
+			data: correctRows(reviewedColumns, localData),
+			validData: validData,
+			errorOnNull: correctRows(reviewedColumns, [...errorOnNull.values()]),
+			errorOnUnique: correctRows(reviewedColumns, [...errorOnUnique.values()]),
+			errorOnOthers: correctRows(reviewedColumns, [...errorOnOthers.values()]),
 		};
 	}, [localData, reviewedColumns, uniqueValueColumn]);
 
