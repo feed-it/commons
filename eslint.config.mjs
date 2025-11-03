@@ -45,6 +45,7 @@ export default [
 			'@typescript-eslint/no-unused-vars': ['error'],
 			'@typescript-eslint/no-explicit-any': 'off',
 			'@typescript-eslint/no-dynamic-delete': 'off',
+			'@typescript-eslint/unified-signatures': 'off',
 		},
 
 		settings: {
