@@ -14,5 +14,6 @@ module.exports = {
 		{ type: 'test', section: 'Tests' },
 		{ type: 'build', section: 'Build System' },
 		{ type: 'ci', section: 'Continuous Integration' },
+		{ type: 'cd', section: 'Continuous Deployment' },
 	],
 };

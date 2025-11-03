@@ -1,5 +1,5 @@
 {
-	"name": "@feed-it/commons",
+	"name": "@lib-feedit/commons",
 	"version": "1.13.3",
 	"description": "Reusable components, scripts, styles, hooks & more",
 	"author": "Feed'it",
@@ -11,6 +11,10 @@
 	"main": "dist/index.js",
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/feed-it/commons.git"
+	},
 	"scripts": {
 		"dev": "nodemon",
 		"build": "rollup -c --bundleConfigAsCjs",
@@ -50,9 +54,6 @@
 		"tslib": "^2.8.1",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.45.0"
-	},
-	"publishConfig": {
-		"@feed-it:registry": "https://npm.pkg.github.com"
 	},
 	"packageManager": "pnpm@10.17.1"
 }
