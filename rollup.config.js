@@ -7,42 +7,83 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import json from '@rollup/plugin-json';
 
-const packageJson = require('./package.json');
+const clientConfig = {
+	input: 'src/client/index.ts',
+	output: [
+		{
+			file: 'dist/client/index.js',
+			format: 'cjs',
+			sourcemap: true,
+		},
+		{
+			file: 'dist/client/index.esm.js',
+			format: 'esm',
+			sourcemap: true,
+		},
+	],
+	plugins: [
+		peerDepsExternal(),
+		resolve(),
+		postcss({
+			modules: true,
+			extract: true,
+			minimize: true,
+			use: ['sass'],
+			sourceMap: true,
+			include: /\.scss$/,
+		}),
+		commonjs(),
+		json(),
+		typescript({ tsconfig: './tsconfig.client.json' }),
+		terser(),
+	],
+	external: ['react', 'react-dom', 'rc-slider/assets/index.css'],
+};
 
-export default [
-	{
-		input: 'src/index.ts',
-		output: [
-			{
-				file: packageJson.main,
-				format: 'cjs',
-				sourcemap: true,
-			},
-			{
-				file: packageJson.module,
-				format: 'esm',
-				sourcemap: true,
-			},
-		],
-		plugins: [
-			peerDepsExternal(),
-			resolve(),
-			commonjs(),
-			json(),
-			typescript({ tsconfig: './tsconfig.json' }),
-			terser(),
-			postcss(),
-		],
-		external: ['react', 'react-dom'],
-	},
-	{
-		input: 'src/index.ts',
-		output: [
-			{
-				file: packageJson.types,
-			},
-		],
-		plugins: [dts.default()],
-		external: [/\.(scss|css)/],
-	},
-];
+const clientTypesConfig = {
+	input: 'src/client/index.ts',
+	output: [
+		{
+			file: 'dist/client/index.d.ts',
+		},
+	],
+	plugins: [dts.default()],
+	external: [/\.(scss|css)$/],
+};
+
+const serverConfig = {
+	input: 'src/server/index.ts',
+	output: [
+		{
+			file: 'dist/server/index.js',
+			format: 'cjs',
+			sourcemap: true,
+		},
+		{
+			file: 'dist/server/index.esm.js',
+			format: 'esm',
+			sourcemap: true,
+		},
+	],
+	plugins: [
+		peerDepsExternal(),
+		resolve(),
+		commonjs(),
+		json(),
+		typescript({ tsconfig: './tsconfig.server.json' }),
+		terser(),
+	],
+	external: ['child_process', 'fs', 'process', 'path'],
+};
+
+const serverTypesConfig = {
+	input: 'src/server/index.ts',
+	output: [
+		{
+			file: 'dist/server/index.d.ts',
+		},
+	],
+	plugins: [dts.default()],
+};
+
+export default [clientConfig, clientTypesConfig, serverConfig, serverTypesConfig];

@@ -27,7 +27,7 @@ If you are new here, take a moment to understand:
 - Do not use `export` on everything for nothing. Same for adding anything in `index.ts` files.
 - Do not use `export default` on something you want to be exported and accessible (in `index.ts`), it will not be compiled.
 
-The best example on how to split files, use differents `export` and others is the [Table Component](./src/components/Table).
+The best example on how to split files, use differents `export` and others is the [Table Component](src/client/components/Table).
 
 ## 3. Release
 

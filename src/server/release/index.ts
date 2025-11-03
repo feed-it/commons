@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { exit } from 'process';
 import yaml from 'js-yaml';
 import { checkbox, select } from '@inquirer/prompts';
-import * as path from 'node:path';
+import * as path from 'path';
 
 export type ReleaseScriptParams = {
 	/**
