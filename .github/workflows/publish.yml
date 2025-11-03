@@ -29,6 +29,6 @@ jobs:
             -   name: Build package
                 run: pnpm run rollup
             -   name: Publish package
-                run: pnpm publish --no-git-checks --registry=https://npm.pkg.github.com/
+                run: pnpm publish --no-git-checks --access public --registry=https://npm.pkg.github.com/
                 env:
                     NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
