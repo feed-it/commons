@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.1](https://github.com/feed-it/commons/compare/v1.14.0...v1.14.1) (2025-11-03)
+
+
+### Bug Fixes
+
+* separated client and server code ([8a8221c](https://github.com/feed-it/commons/commit/8a8221c2dd439ea9001daaa706c4e068e9c65067))
+
+
+### Documentation
+
+* renamed package name ([c73a2ec](https://github.com/feed-it/commons/commit/c73a2ecd1d442b135869dcd297ce5b0993ef66b6))
+
 ## [1.14.0](https://github.com/feed-it/commons/compare/v1.13.3...v1.14.0) (2025-11-03)
 
 
