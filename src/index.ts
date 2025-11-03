@@ -15,3 +15,5 @@ export * from './hooks/useOutsideClick';
 export * from './hooks/usePromise';
 
 export * from './providers';
+
+export * from './scripts/release';
