@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.4](https://github.com/feed-it/commons/compare/v1.14.3...v1.14.4) (2025-11-03)
+
+
+### Bug Fixes
+
+* **rollup:** copy custom eslint config ([349ad79](https://github.com/feed-it/commons/commit/349ad79571cc8d93b7266878aef48b3f653ba6a3))
+
 ### [1.14.3](https://github.com/feed-it/commons/compare/v1.14.2...v1.14.3) (2025-11-03)
 
 
