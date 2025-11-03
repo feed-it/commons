@@ -9,7 +9,7 @@
 		"react"
 	],
 	"main": "dist/client/index.js",
-	"module": "dist/client/index.mjs",
+	"module": "dist/client/index.esm.js",
 	"types": "dist/client/index.d.ts",
 	"files": [
 		"dist"
