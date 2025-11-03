@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/feed-it/commons/compare/v1.13.3...v1.14.0) (2025-11-03)
+
+
+### Features
+
+* release script ([d2e4f2b](https://github.com/feed-it/commons/commit/d2e4f2ba3b115175980cca4d78ccd5b016e8a6cb))
+
+
+### Continuous Deployment
+
+* publish package to npm public registry ([cf19677](https://github.com/feed-it/commons/commit/cf196772428e6336ee969ba5bbb3ffdce847bb76))
+
 ### [1.13.3](https://github.com/feed-it/commons/compare/v1.13.2...v1.13.3) (2025-11-03)
 
 
