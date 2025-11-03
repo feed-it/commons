@@ -13,7 +13,7 @@
 	"types": "dist/index.d.ts",
 	"scripts": {
 		"dev": "nodemon",
-		"rollup": "rollup -c --bundleConfigAsCjs",
+		"build": "rollup -c --bundleConfigAsCjs",
 		"lint": "eslint ./src",
 		"lint:fix": "eslint ./src --fix",
 		"release": "standard-version && git push --follow-tags"

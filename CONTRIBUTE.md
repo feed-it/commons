@@ -1,37 +1,34 @@
-# Comment l’utiliser
+# How to contribute to this package
 
-## 1. Github + Env
+How to dev on this package locally only
 
-D’abord, il faut un générer un token Github [ici](https://github.com/settings/tokens)
+## 1. Setup
 
-Il faut créer un token **(classic)** :
+First, run these commands here to set up the base dev environnement:
 
-- Nom : NPM_TOKEN
-- Expiration: Au choix
-- Permission: **package:read** uniquement celle-ci
+- `pnpm run build` - Locally build the package in `dist` folder.
+- `pnpm link` - Create a symlink to this package.
+- `pnpm run dev` - Use to automatically rebuild the package when there are changes.
+- `pnpm run build` - Alternatively, use this command if you want to manually rebuild the package.
 
-Après l’avoir généré, enregistrez le quelque part puisque Github ne le remontrera jamais, même en cas d’oubli.
+In a side project of your choice, install the local package with `pnpm link @feed-it/commons`
 
-Ensuite dans votre profil de terminal, on ajoute:
+## 2. Rules & Tips
 
-- Pour Linux soit dans `.bashrc` ou `.zshrc` : `export NPM_TOKEN="<VOTRE TOKEN>"`
+- Typescript is mandatory, otherwise the releases cannot work. 
+- The commits **need** to respect the [Angular commit names convention](https://www.conventionalcommits.org/fr/v1.0.0/), so the releases can work.
 
-- Pour Windows dans le Gestionnaire des variables d'environnement, ajoutez une nouvelle variable (**=> pas dans le PATH
-  **)
-  Nom: NPM_TOKEN
-  Valeur: le token
+If you are new here, take a moment to understand:
 
-## 2. Projet
+- The project architecture
+- How the composants are imported in each `index.ts` so they can be compiled and accessible when the package is imported.
+- How the differents types are declared and exported.
+- Make sure to difference `type` and `interface`.
+- Do not use `export` on everything for nothing. Same for adding anything in `index.ts` files.
+- Do not use `export default` on something you want to be exported and accessible (in `index.ts`), it will not be compiled.
 
-Dans le projet, ajoutez à la racine un fichier `.npmrc` avec comme contenu:
+The best example on how to split files, use differents `export` and others is the [Table Component](./src/components/Table).
 
-```
-@feed-it:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${NPM_TOKEN}
-```
+## 3. Release
 
-Ne remplacez pas `${NPM_TOKEN}` par votre token. Laissez tel quel.
-
-## 3. Fin
-
-Vous n’avez plus qu’à utiliser la commande `pnpm add -D @feed-it/commons` ou `npm i -D @feed-it/commons`
+When you have finished your work and committed it. Run `pnpm run release` and go to [repository actions](https://github.com/feed-it/commons/actions) to watch the ci/cd pipeline running.
