@@ -6,6 +6,7 @@ import terser from '@rollup/plugin-terser';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import json from '@rollup/plugin-json';
+import copy from 'rollup-plugin-copy';
 
 const clientConfig = {
 	input: 'src/client/index.ts',
@@ -35,6 +36,9 @@ const clientConfig = {
 		commonjs(),
 		json(),
 		typescript({ tsconfig: './tsconfig.client.json' }),
+		copy({
+			targets: [{ src: 'eslint.mjs', dest: 'dist/client' }],
+		}),
 		terser(),
 	],
 	external: ['react', 'react-dom', 'rc-slider/assets/index.css'],
