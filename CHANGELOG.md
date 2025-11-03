@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.2](https://github.com/feed-it/commons/compare/v1.14.1...v1.14.2) (2025-11-03)
+
+
+### Bug Fixes
+
+* **eslint:** warning on unified signatures ([e67f7e1](https://github.com/feed-it/commons/commit/e67f7e1c8bf65659ea39de094687c5c2d4f2a5ca))
+
 ### [1.14.1](https://github.com/feed-it/commons/compare/v1.14.0...v1.14.1) (2025-11-03)
 
 
