@@ -26,7 +26,6 @@ const clientConfig = {
 		peerDepsExternal(),
 		resolve(),
 		postcss({
-			modules: true,
 			minimize: true,
 			use: ['sass'],
 			sourceMap: true,
