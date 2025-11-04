@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.15.1](https://github.com/feed-it/commons/compare/v1.15.0...v1.15.1) (2025-11-04)
+
+
+### Bug Fixes
+
+* **release:** before start function test yaml existance without file extension ([b412765](https://github.com/feed-it/commons/commit/b412765d87bace1457919f8f0bde03d2a6e2d994))
+
 ## [1.15.0](https://github.com/feed-it/commons/compare/v1.14.8...v1.15.0) (2025-11-04)
 
 
