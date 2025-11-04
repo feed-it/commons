@@ -4,7 +4,11 @@ import { exit } from 'process';
 import yaml from 'js-yaml';
 import { checkbox, select } from '@inquirer/prompts';
 import * as path from 'path';
-import chalk from 'chalk';
+import { Chalk } from 'chalk';
+
+const chalk = new Chalk({
+	level: 1,
+});
 
 export type ReleaseScriptParams = {
 	/**
