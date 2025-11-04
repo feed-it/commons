@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.15.5](https://github.com/feed-it/commons/compare/v1.15.4...v1.15.5) (2025-11-04)
+
+
+### Bug Fixes
+
+* **release:** optional constructor params set condition ([79fc057](https://github.com/feed-it/commons/commit/79fc05758dfe8964af15bb8e266a391627d61fdf))
+
 ### [1.15.4](https://github.com/feed-it/commons/compare/v1.15.3...v1.15.4) (2025-11-04)
 
 
