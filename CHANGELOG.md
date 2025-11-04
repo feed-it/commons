@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.8](https://github.com/feed-it/commons/compare/v1.14.7...v1.14.8) (2025-11-04)
+
+
+### Bug Fixes
+
+* **postcss:** disable modules option ([845fd42](https://github.com/feed-it/commons/commit/845fd42cee3b3d063647778f61c4d8ea07949f53))
+
 ### [1.14.7](https://github.com/feed-it/commons/compare/v1.14.6...v1.14.7) (2025-11-04)
 
 
