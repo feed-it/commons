@@ -82,17 +82,17 @@ export class ReleaseScript {
 		this.beforeStart();
 
 		try {
-			const choices = [{ name: 'Production', value: 'prod', checked: true }];
+			let releases: ('beta' | 'prod')[] = ['prod'];
 
 			if (this.haveBeta) {
-				choices[0].checked = false;
-				choices.splice(0, 0, { name: 'Beta', value: 'beta', checked: true });
+				releases = await checkbox({
+					message: 'Which type of release you want to do?',
+					choices: [
+						{ name: 'Beta', value: 'beta', checked: true },
+						{ name: 'Production', value: 'prod', checked: false },
+					],
+				});
 			}
-
-			const releases = await checkbox({
-				message: 'Which type of release you want to do?',
-				choices: choices,
-			});
 
 			if (releases.includes('prod')) {
 				const typeVersion = await select({
