@@ -95,6 +95,7 @@ export class ReleaseScript {
 	 */
 	private beforeStart() {
 		console.info('\u001b[34mTesting given parameters before releasing app\u001b[0m');
+
 		// Test serverName
 		console.info('\u001b[34m1.Testing ssh connexion...\u001b[0m');
 		try {
@@ -106,7 +107,7 @@ export class ReleaseScript {
 
 		// Test YAML file
 		console.info('\u001b[34m2.Check if YAML file exists...\u001b[0m');
-		const filePath = path.resolve(process.cwd(), 'release', this.yamlFilename);
+		const filePath = `${process.cwd()}/release/${this.yamlFilename}.yaml`;
 		if (!existsSync(filePath)) {
 			console.error(`\u001b[31mUnable to find YAML file at: ${filePath}\u001b[0m`);
 			exit(1);
