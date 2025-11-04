@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.15.4](https://github.com/feed-it/commons/compare/v1.15.3...v1.15.4) (2025-11-04)
+
+
+### Bug Fixes
+
+* **release:** beta / prod checkbox prompt appear when there is no beta ([02982ba](https://github.com/feed-it/commons/commit/02982ba9deb196752e1d31c3a93b80a7c5eed778))
+
+
+### Documentation
+
+* **install:** added eslint custom config installation ([df88616](https://github.com/feed-it/commons/commit/df886164d612a7d5e6bc7ca7ca711f5af8469fc4))
+
 ### [1.15.3](https://github.com/feed-it/commons/compare/v1.15.2...v1.15.3) (2025-11-04)
 
 
