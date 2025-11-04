@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.7](https://github.com/feed-it/commons/compare/v1.14.6...v1.14.7) (2025-11-04)
+
+
+### Bug Fixes
+
+* **postcss:** disable extract option ([4151fcd](https://github.com/feed-it/commons/commit/4151fcdeca9a6dd2c513d5e65709430c72181a24))
+
 ### [1.14.6](https://github.com/feed-it/commons/compare/v1.14.5...v1.14.6) (2025-11-04)
 
 
