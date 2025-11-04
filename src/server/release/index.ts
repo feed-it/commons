@@ -48,8 +48,8 @@ export class ReleaseScript {
 		this.serverName = params.serverName;
 		this.yamlFilename = path.parse(params.yamlFilename).name;
 
-		if (params.appName) this.appName = params.appName;
-		if (params.haveBeta) this.haveBeta = params.haveBeta;
+		if (Object.hasOwn(params, 'appName')) this.appName = params.appName as string;
+		if (Object.hasOwn(params, 'haveBeta')) this.haveBeta = params.haveBeta as boolean;
 	}
 
 	/**
