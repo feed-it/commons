@@ -27,7 +27,6 @@ const clientConfig = {
 		resolve(),
 		postcss({
 			modules: true,
-			extract: true,
 			minimize: true,
 			use: ['sass'],
 			sourceMap: true,
