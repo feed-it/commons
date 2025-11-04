@@ -25,7 +25,8 @@
 			"import": "./dist/server/index.esm.js",
 			"types": "./dist/server/index.d.ts"
 		},
-		"./eslint.mjs": "./dist/client/eslint.mjs"
+		"./eslint.mjs": "./dist/client/eslint.mjs",
+		"./client/rc-slider.css": "./dist/client/rc-slider.css"
 	},
 	"repository": {
 		"type": "git",

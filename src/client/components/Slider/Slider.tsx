@@ -1,5 +1,4 @@
 import RCSlider from 'rc-slider';
-import 'rc-slider/assets/index.css';
 import { CSSProperties, HTMLAttributes, ReactElement, useCallback, useEffect, useState } from 'react';
 import './styles.scss';
 

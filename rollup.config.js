@@ -37,11 +37,14 @@ const clientConfig = {
 		json(),
 		typescript({ tsconfig: './tsconfig.client.json' }),
 		copy({
-			targets: [{ src: 'eslint.mjs', dest: 'dist/client' }],
+			targets: [
+				{ src: 'eslint.mjs', dest: 'dist/client' },
+				{ src: 'node_modules/rc-slider/assets/index.css', dest: 'dist/client', rename: 'rc-slider.css' },
+			],
 		}),
 		terser(),
 	],
-	external: ['react', 'react-dom', 'rc-slider/assets/index.css'],
+	external: ['react', 'react-dom'],
 };
 
 const clientTypesConfig = {
