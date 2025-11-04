@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.15.3](https://github.com/feed-it/commons/compare/v1.15.2...v1.15.3) (2025-11-04)
+
+
+### Bug Fixes
+
+* **release:** use chalk to color terminal outputs ([c967090](https://github.com/feed-it/commons/commit/c967090d1da86395680a5e4127c8a1e9c490e47a))
+
 ### [1.15.2](https://github.com/feed-it/commons/compare/v1.15.1...v1.15.2) (2025-11-04)
 
 
