@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.5](https://github.com/feed-it/commons/compare/v1.14.4...v1.14.5) (2025-11-04)
+
+
+### Bug Fixes
+
+* **exports:** missing eslint export in package ([49d5336](https://github.com/feed-it/commons/commit/49d533642166dbc628bdd94f3f7b9792956d1e42))
+
 ### [1.14.4](https://github.com/feed-it/commons/compare/v1.14.3...v1.14.4) (2025-11-03)
 
 
