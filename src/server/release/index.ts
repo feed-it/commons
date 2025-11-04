@@ -1,5 +1,5 @@
 import { execSync as exec } from 'child_process';
-import { readFileSync, writeFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { exit } from 'process';
 import yaml from 'js-yaml';
 import { checkbox, select } from '@inquirer/prompts';
@@ -48,6 +48,8 @@ export class ReleaseScript {
 	}
 
 	async start() {
+		this.beforeStart();
+
 		try {
 			const choices = [{ name: 'Production', value: 'prod', checked: true }];
 
@@ -86,6 +88,31 @@ export class ReleaseScript {
 
 		console.info(`\u001b[32m${this.appName} successfully updated !\u001b[0m`);
 		console.info('Make sure to update main/develop now !');
+	}
+
+	/**
+	 * Test parameters provided in constructor call
+	 */
+	private beforeStart() {
+		console.info('\u001b[34mTesting given parameters before releasing app\u001b[0m');
+		// Test serverName
+		console.info('\u001b[34m1.Testing ssh connexion...\u001b[0m');
+		try {
+			exec(`ssh -T ${this.serverName}`);
+		} catch (error) {
+			console.error(`\u001b[31mFailed to connect to ${this.serverName}\u001b[0m\n`, error);
+			exit(1);
+		}
+
+		// Test YAML file
+		console.info('\u001b[34m2.Check if YAML file exists...\u001b[0m');
+		const filePath = path.resolve(process.cwd(), 'release', this.yamlFilename);
+		if (!existsSync(filePath)) {
+			console.error(`\u001b[31mUnable to find YAML file at: ${filePath}\u001b[0m`);
+			exit(1);
+		}
+
+		console.info('\u001b[32mAll tests passed!\u001b[0m');
 	}
 
 	/**
