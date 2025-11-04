@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.14.6](https://github.com/feed-it/commons/compare/v1.14.5...v1.14.6) (2025-11-04)
+
+
+### Bug Fixes
+
+* **rc-slider:** copy rc-slider stylesheet in dist ([0667011](https://github.com/feed-it/commons/commit/066701147ee6eb898ea6727798c8a2788716e594))
+
 ### [1.14.5](https://github.com/feed-it/commons/compare/v1.14.4...v1.14.5) (2025-11-04)
 
 
