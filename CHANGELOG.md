@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0](https://github.com/feed-it/commons/compare/v1.14.8...v1.15.0) (2025-11-04)
+
+
+### Features
+
+* **release:** test ssh connexion and file existing before start releasing ([4095055](https://github.com/feed-it/commons/commit/40950553a46d227818c78b0f899fb6dc43af2bd0))
+
 ### [1.14.8](https://github.com/feed-it/commons/compare/v1.14.7...v1.14.8) (2025-11-04)
 
 
