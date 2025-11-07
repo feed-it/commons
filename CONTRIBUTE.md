@@ -11,7 +11,7 @@ First, run these commands here to set up the base dev environnement:
 - `pnpm run dev` - Use to automatically rebuild the package when there are changes.
 - `pnpm run build` - Alternatively, use this command if you want to manually rebuild the package.
 
-In a side project of your choice, install the local package with `pnpm link @feed-it/commons`
+In a side project of your choice, install the local package with `pnpm link @lib-feedit/commons`
 
 ## 2. Rules & Tips
 
