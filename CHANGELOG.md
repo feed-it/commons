@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.15.6](https://github.com/feed-it/commons/compare/v1.15.5...v1.15.6) (2025-11-07)
+
+
+### Documentation
+
+* mispelling package name ([61b06b7](https://github.com/feed-it/commons/commit/61b06b79e85b17234e1157b62c4f9e37dc84f748))
+
 ### [1.15.5](https://github.com/feed-it/commons/compare/v1.15.4...v1.15.5) (2025-11-04)
 
 
