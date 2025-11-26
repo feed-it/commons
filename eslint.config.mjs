@@ -10,7 +10,7 @@ export default [
 	...tseslint.configs.strict,
 	react.configs.flat.recommended,
 	react.configs.flat['jsx-runtime'],
-	...reactHooks.configs['recommended-latest'],
+	...reactHooks.configs.recommended,
 	{
 		files: ['src/**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}'],
 		languageOptions: {
@@ -39,6 +39,7 @@ export default [
 			// --- React rules
 			'react/prop-types': 'off',
 			'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx'] }],
+			'react-hooks/set-state-in-effect': 'off',
 
 			// --- Typescript rules
 			'no-unused-vars': 'off',

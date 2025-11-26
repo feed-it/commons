@@ -8,13 +8,11 @@ export function useDebounce(callback: () => void, wait: number = 500) {
 		ref.current = callback;
 	}, [callback]);
 
-	const debouncedCallback = useMemo(() => {
+	return useMemo(() => {
 		const func = (...args: any[]) => {
 			ref.current?.(...args);
 		};
 
 		return debounce(func, wait);
 	}, [wait]);
-
-	return debouncedCallback;
 }
