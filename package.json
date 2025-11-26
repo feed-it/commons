@@ -15,6 +15,11 @@
 		"dist"
 	],
 	"exports": {
+		".": {
+			"require": "./dist/client/index.js",
+			"import": "./dist/client/index.esm.js",
+			"types": "./dist/client/index.d.ts"
+		},
 		"./client": {
 			"require": "./dist/client/index.js",
 			"import": "./dist/client/index.esm.js",
