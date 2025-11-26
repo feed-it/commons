@@ -25,31 +25,33 @@ export type ReleaseScriptParams = {
 	 *
 	 * **Need to be located in `release` folder at the root level of the project**
 	 */
-	yamlFilename: string;
+	yamlFile: string;
 	/**
 	 * The SSH server alias name where the Kubernetes YAML file will be sent.
 	 */
 	serverName: string;
 	/**
-	 * @default true
+		Kubernetes YAML config filename for **beta**.
+		
+		**Need to be located in `release` folder at the root level of the project**
 	 */
-	haveBeta?: boolean;
+	betaYamlFile?: string;
 };
 
 export class ReleaseScript {
 	private readonly appName: string = 'App';
 	private readonly dockerImage: string = '';
-	private readonly yamlFilename: string = '';
+	private readonly yamlFile: string = '';
 	private readonly serverName: string = '';
-	private readonly haveBeta: boolean = true;
+	private readonly betaYamlFile: string = '';
 
 	constructor(params: ReleaseScriptParams) {
 		this.dockerImage = params.dockerImage;
 		this.serverName = params.serverName;
-		this.yamlFilename = path.parse(params.yamlFilename).name;
+		this.yamlFile = path.parse(params.yamlFile).name;
 
 		if (Object.hasOwn(params, 'appName')) this.appName = params.appName as string;
-		if (Object.hasOwn(params, 'haveBeta')) this.haveBeta = params.haveBeta as boolean;
+		if (Object.hasOwn(params, 'betaYamlFile')) this.betaYamlFile = path.parse(params.betaYamlFile as string).name;
 	}
 
 	/**
@@ -69,10 +71,16 @@ export class ReleaseScript {
 
 		// Test YAML file
 		console.info(chalk.blue('1.b. Check if YAML file exists...'));
-		const filePath = `${process.cwd()}/release/${this.yamlFilename}.yaml`;
-		if (!existsSync(filePath)) {
-			console.error(chalk.red(`Unable to find YAML file at: ${filePath}`));
-			exit(1);
+		const filesToCheck = [`${process.cwd()}/release/${this.yamlFile}.yaml`];
+		if (this.betaYamlFile) {
+			filesToCheck.push(`${process.cwd()}/release/${this.betaYamlFile}.yaml`);
+		}
+
+		for (const filePath of filesToCheck) {
+			if (!existsSync(filePath)) {
+				console.error(chalk.red(`Unable to find YAML file at: ${filePath}`));
+				exit(1);
+			}
 		}
 
 		console.info(chalk.green('All tests passed!\n'));
@@ -84,7 +92,7 @@ export class ReleaseScript {
 		try {
 			let releases: ('beta' | 'prod')[] = ['prod'];
 
-			if (this.haveBeta) {
+			if (this.betaYamlFile) {
 				releases = await checkbox({
 					message: 'Which type of release you want to do?',
 					choices: [
@@ -139,7 +147,7 @@ export class ReleaseScript {
 
 		const digest = this.docker(release);
 		this.yaml(digest, release);
-		this.scp();
+		this.scp(release);
 		this.git(release);
 	}
 
@@ -186,7 +194,9 @@ export class ReleaseScript {
 	private yaml(digest: string, release: 'prod' | 'beta') {
 		console.info(chalk.blue.bold('\n3. Updating Kubernetes YAML config file'));
 
-		const yamlContent = readFileSync(`${process.cwd()}/release/${this.yamlFilename}.yaml`, 'utf-8');
+		const file = release === 'beta' ? this.betaYamlFile : this.yamlFile;
+
+		const yamlContent = readFileSync(`${process.cwd()}/release/${file}.yaml`, 'utf-8');
 		const data: any[] = yaml.loadAll(yamlContent);
 
 		let newYamlContent = yamlContent;
@@ -204,7 +214,7 @@ export class ReleaseScript {
 			}
 		}
 
-		writeFileSync(`${process.cwd()}/release/${this.yamlFilename}.yaml`, newYamlContent, 'utf-8');
+		writeFileSync(`${process.cwd()}/release/${file}.yaml`, newYamlContent, 'utf-8');
 
 		console.info(chalk.green('Kubernetes YAML config file updated'));
 	}
@@ -212,10 +222,11 @@ export class ReleaseScript {
 	/**
 	 * Send the updated Kubernetes YAML config file to the server.
 	 */
-	private scp() {
+	private scp(release: 'prod' | 'beta') {
 		console.info(chalk.blue.bold('\n4. Send Kubernetes YAML config file to the server'));
 
-		const filePath = `${process.cwd()}/release/${this.yamlFilename}.yaml`;
+		const file = release === 'beta' ? this.betaYamlFile : this.yamlFile;
+		const filePath = `${process.cwd()}/release/${file}.yaml`;
 
 		exec(`scp -P 91 ${filePath} ${this.serverName}:.kube-yaml/`, {
 			stdio: 'inherit',
