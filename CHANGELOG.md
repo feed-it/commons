@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.16.0](https://github.com/feed-it/commons/compare/v1.15.6...v1.16.0) (2025-11-26)
+
+
+### Features
+
+* **release:** separate beta from prod yaml file ([d0cd59d](https://github.com/feed-it/commons/commit/d0cd59d46e6c9919287dd145318f85d01e3e79ca))
+
+
+### Bug Fixes
+
+* **eslint:** delete unused exported eslint config ([0834db2](https://github.com/feed-it/commons/commit/0834db2b6739e84bca9fb6dde2030e6b7a68c505))
+
 ### [1.15.6](https://github.com/feed-it/commons/compare/v1.15.5...v1.15.6) (2025-11-07)
 
 
