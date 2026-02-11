@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.17.0](https://github.com/feed-it/commons/compare/v1.16.0...v1.17.0) (2026-02-11)
+
+
+### Features
+
+* **release:** add yamlFolder param ([d73644a](https://github.com/feed-it/commons/commit/d73644af1832d4c7d76a2ad11bcda716c443936b))
+
 ## [1.16.0](https://github.com/feed-it/commons/compare/v1.15.6...v1.16.0) (2025-11-26)
 
 
