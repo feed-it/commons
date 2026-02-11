@@ -1,10 +1,10 @@
+import { checkbox, select } from '@inquirer/prompts';
+import { Chalk } from 'chalk';
 import { execSync as exec } from 'child_process';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
-import { exit } from 'process';
 import yaml from 'js-yaml';
-import { checkbox, select } from '@inquirer/prompts';
 import * as path from 'path';
-import { Chalk } from 'chalk';
+import { exit } from 'process';
 
 const chalk = new Chalk({
 	level: 1,
@@ -31,6 +31,10 @@ export type ReleaseScriptParams = {
 	 */
 	serverName: string;
 	/**
+	 * The folder inside .kube-yaml in the server
+	 */
+	yamlFolder: 'core-backend' | 'core-frontend' | 'veez-backend' | 'veez-frontend'
+	/**
 		Kubernetes YAML config filename for **beta**.
 		
 		**Need to be located in `release` folder at the root level of the project**
@@ -43,12 +47,14 @@ export class ReleaseScript {
 	private readonly dockerImage: string = '';
 	private readonly yamlFile: string = '';
 	private readonly serverName: string = '';
+	private readonly yamlFolder: string = '';
 	private readonly betaYamlFile: string = '';
 
 	constructor(params: ReleaseScriptParams) {
 		this.dockerImage = params.dockerImage;
 		this.serverName = params.serverName;
 		this.yamlFile = path.parse(params.yamlFile).name;
+		this.yamlFolder = params.yamlFolder;
 
 		if (Object.hasOwn(params, 'appName')) this.appName = params.appName as string;
 		if (Object.hasOwn(params, 'betaYamlFile')) this.betaYamlFile = path.parse(params.betaYamlFile as string).name;
@@ -228,7 +234,7 @@ export class ReleaseScript {
 		const file = release === 'beta' ? this.betaYamlFile : this.yamlFile;
 		const filePath = `${process.cwd()}/release/${file}.yaml`;
 
-		exec(`scp -P 91 ${filePath} ${this.serverName}:.kube-yaml/`, {
+		exec(`scp -P 91 ${filePath} ${this.serverName}:.kube-yaml/${this.yamlFolder}`, {
 			stdio: 'inherit',
 		});
 
