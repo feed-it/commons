@@ -129,7 +129,7 @@ export class MonorepoRelease {
 		// Update the package version if the release is for production
 		if (release === 'prod') {
 			console.info(chalk.blue(`${app.toUpperCase()}: 1. Update package version`));
-			exec(`npm version --no-git-tag-version ${typeVersion}`, {
+			exec(`cd apps/${app} && npm version --no-git-tag-version ${typeVersion} && cd ../../`, {
 				stdio: 'inherit',
 			});
 		}
