@@ -191,18 +191,21 @@ export class ReleaseScript {
 
 		//* 1. Build Docker image.
 		console.info(chalk.blue('2.a Build image'));
-		exec(`docker build -t ${this.dockerImage}:${release} .`, {
-			stdio: 'inherit',
-		});
-
-		//* 2. Push Docker image to the Docker Hub repository.
-		console.info(chalk.blue('2.b Push image'));
-		exec(`docker push ${this.dockerImage}:${release}`, {
-			stdio: 'inherit',
-		});
+		exec(
+			`docker buildx create --name attest-builder --driver docker-container --use || docker buildx use attest-builder`,
+			{
+				stdio: 'inherit',
+			}
+		);
+		exec(
+			`docker buildx build --provenance=true --sbom=true -t ${this.dockerImage}:${release} --push .`,
+			{
+				stdio: 'inherit',
+			}
+		);
 
 		//* 3. Fetch the new Docker image digest.
-		console.info(chalk.blue('2.c Fetch docker image digest'));
+		console.info(chalk.blue('2.b Fetch docker image digest'));
 		const digest = exec(
 			`docker inspect --format="{{index .RepoDigests}}" ${this.dockerImage}:${release}`,
 			{
