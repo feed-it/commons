@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.18.1](https://github.com/feed-it/commons/compare/v1.18.0...v1.18.1) (2026-03-06)
+
+
+### Bug Fixes
+
+* **release:** remove unwanted param ([78cab82](https://github.com/feed-it/commons/commit/78cab82e142419090dda8fb00de25d508e2723d1))
+
 ## [1.18.0](https://github.com/feed-it/commons/compare/v1.17.0...v1.18.0) (2026-03-06)
 
 
