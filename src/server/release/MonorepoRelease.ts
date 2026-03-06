@@ -181,15 +181,21 @@ export class MonorepoRelease {
 		);
 
 		exec(
-			`docker buildx build --provenance=true --sbom=true --build-arg APP=${app} -t feedit/${app}:${release} --push .`,
+			`docker buildx build --provenance=true --sbom=true --build-arg APP=${app} -t feedit/${app}:${release} .`,
 			{
 				stdio: 'inherit',
 			}
 		);
 
+		//* 2. Push Docker image to the Docker Hub repository.
+		console.info(chalk.blue`${app.toUpperCase()}: 2.b Push image`);
+		exec(`docker push feedit/${app}:${release}`, {
+			stdio: 'inherit',
+		});
+
 		//* 3. Fetch the new Docker image digest.
 		console.info(
-			chalk.blue(`${app.toUpperCase()}: 2.b Fetch docker image digest`)
+			chalk.blue(`${app.toUpperCase()}: 2.c Fetch docker image digest`)
 		);
 		const digest = exec(
 			`docker inspect --format="{{index .RepoDigests}}" feedit/${app}:${release}`,

@@ -198,11 +198,17 @@ export class ReleaseScript {
 			}
 		);
 		exec(
-			`docker buildx build --provenance=true --sbom=true -t ${this.dockerImage}:${release} --push .`,
+			`docker buildx build --provenance=true --sbom=true -t ${this.dockerImage}:${release} .`,
 			{
 				stdio: 'inherit',
 			}
 		);
+
+		//* 2. Push Docker image to the Docker Hub repository.
+		console.info(chalk.blue`2.b Push image`);
+		exec(`docker push feedit/${this.dockerImage}:${release}`, {
+			stdio: 'inherit',
+		});
 
 		//* 3. Fetch the new Docker image digest.
 		console.info(chalk.blue('2.b Fetch docker image digest'));
