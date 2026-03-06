@@ -2,7 +2,7 @@ import { checkbox, select } from '@inquirer/prompts';
 import { Chalk } from 'chalk';
 import yaml from 'js-yaml';
 import { execSync as exec } from 'node:child_process';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import * as path from 'node:path';
 import { exit } from 'node:process';
 
@@ -210,6 +210,8 @@ export class ReleaseScript {
 			readFileSync('./build-metadata.json', 'utf-8')
 		);
 		const digest = metadata['containerimage.digest'];
+
+		rmSync('./build-metadata.json');
 
 		if (!digest) {
 			console.error(chalk.red('Any Docker image digest found.'));

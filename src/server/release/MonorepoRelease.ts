@@ -2,7 +2,7 @@ import { checkbox, select } from '@inquirer/prompts';
 import { Chalk } from 'chalk';
 import yaml from 'js-yaml';
 import { execSync as exec } from 'node:child_process';
-import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { exit } from 'node:process';
 
 const chalk = new Chalk({
@@ -195,6 +195,8 @@ export class MonorepoRelease {
 			readFileSync('./build-metadata.json', 'utf-8')
 		);
 		const digest = metadata['containerimage.digest'];
+
+		rmSync('./build-metadata.json');
 
 		if (!digest) {
 			console.error(
