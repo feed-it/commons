@@ -181,32 +181,20 @@ export class MonorepoRelease {
 		);
 
 		exec(
-			`docker buildx build --provenance=true --sbom=true --build-arg APP=${app} -t feedit/${app}:${release} .`,
+			`docker buildx build --provenance=true --sbom=true --build-arg APP=${app} -t feedit/${app}:${release} --push --metadata-file ./build-metadata.json .`,
 			{
 				stdio: 'inherit',
 			}
 		);
 
-		//* 2. Push Docker image to the Docker Hub repository.
-		console.info(chalk.blue`${app.toUpperCase()}: 2.b Push image`);
-		exec(`docker push feedit/${app}:${release}`, {
-			stdio: 'inherit',
-		});
-
 		//* 3. Fetch the new Docker image digest.
 		console.info(
-			chalk.blue(`${app.toUpperCase()}: 2.c Fetch docker image digest`)
+			chalk.blue(`${app.toUpperCase()}: 2.b Get docker image digest`)
 		);
-		const digest = exec(
-			`docker inspect --format="{{index .RepoDigests}}" feedit/${app}:${release}`,
-			{
-				encoding: 'utf-8',
-			}
-		)
-			.toString()
-			.replace(/(\[|\])/g, '')
-			.replace('\n', '')
-			.replace(`feedit/${app}@`, '');
+		const metadata = JSON.parse(
+			readFileSync('./build-metadata.json', 'utf-8')
+		);
+		const digest = metadata['containerimage.digest'];
 
 		if (!digest) {
 			console.error(

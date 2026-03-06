@@ -198,30 +198,18 @@ export class ReleaseScript {
 			}
 		);
 		exec(
-			`docker buildx build --provenance=true --sbom=true -t ${this.dockerImage}:${release} .`,
+			`docker buildx build --provenance=true --sbom=true -t ${this.dockerImage}:${release} --push --metadata-file ./build-metadata.json .`,
 			{
 				stdio: 'inherit',
 			}
 		);
 
-		//* 2. Push Docker image to the Docker Hub repository.
-		console.info(chalk.blue`2.b Push image`);
-		exec(`docker push feedit/${this.dockerImage}:${release}`, {
-			stdio: 'inherit',
-		});
-
 		//* 3. Fetch the new Docker image digest.
 		console.info(chalk.blue('2.b Fetch docker image digest'));
-		const digest = exec(
-			`docker inspect --format="{{index .RepoDigests}}" ${this.dockerImage}:${release}`,
-			{
-				encoding: 'utf-8',
-			}
-		)
-			.toString()
-			.replace(/(\[|\])/g, '')
-			.replace('\n', '')
-			.replace(`${this.dockerImage}@`, '');
+		const metadata = JSON.parse(
+			readFileSync('./build-metadata.json', 'utf-8')
+		);
+		const digest = metadata['containerimage.digest'];
 
 		if (!digest) {
 			console.error(chalk.red('Any Docker image digest found.'));
