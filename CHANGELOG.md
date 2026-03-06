@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.18.2](https://github.com/feed-it/commons/compare/v1.18.1...v1.18.2) (2026-03-06)
+
+
+### Bug Fixes
+
+* **release:** npm version in wrong directory ([b7833f9](https://github.com/feed-it/commons/commit/b7833f94eb315071de63901eda4391732859a5d3))
+
 ### [1.18.1](https://github.com/feed-it/commons/compare/v1.18.0...v1.18.1) (2026-03-06)
 
 
