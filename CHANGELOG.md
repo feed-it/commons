@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.18.0](https://github.com/feed-it/commons/compare/v1.17.0...v1.18.0) (2026-03-06)
+
+
+### Features
+
+* add monorepo release ([558c9f5](https://github.com/feed-it/commons/commit/558c9f5cca0bd3c8296e3c3f03235fc7fbec7d56))
+
 ## [1.17.0](https://github.com/feed-it/commons/compare/v1.16.0...v1.17.0) (2026-02-11)
 
 
