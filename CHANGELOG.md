@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0](https://github.com/feed-it/commons/compare/v1.18.2...v1.19.0) (2026-03-06)
+
+
+### Features
+
+* moved on biomejs ([a7fda16](https://github.com/feed-it/commons/commit/a7fda16f6a3c874e22e1c75151e9970eb3c9a1c8))
+
 ### [1.18.2](https://github.com/feed-it/commons/compare/v1.18.1...v1.18.2) (2026-03-06)
 
 
