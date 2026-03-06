@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { Dropdown } from '../Dropdown';
 import { ProgressBar } from '../ProgressBar';
-import { ExtendedColumn } from './types';
+import type { ExtendedColumn } from './types';
 
 type TableCellProps = {
 	row: any;
@@ -10,7 +10,12 @@ type TableCellProps = {
 	onChange: (value: string) => void;
 };
 
-export default function TableCell({ row, column, data, onChange }: TableCellProps) {
+export default function TableCell({
+	row,
+	column,
+	data,
+	onChange,
+}: TableCellProps) {
 	const value = useMemo(() => {
 		//* Below exactMatch prevent potentialValue to return a value before the exact match could be found
 		//* Because find method loop one by one array data
@@ -18,14 +23,20 @@ export default function TableCell({ row, column, data, onChange }: TableCellProp
 		//* Available values are ['abc', 'ab'] and initialValue is 'ab';
 		//* If allowMismatch is true, 'abc' will be returned instead of 'ab' because it's in the second position
 
-		const prop = column.error?.type === 'mismatch' && column.error.target ? column.error.target : column.prop;
+		const prop =
+			column.error?.type === 'mismatch' && column.error.target
+				? column.error.target
+				: column.prop;
 		const initialValue = row[prop];
 
 		if (column.type !== 'select') {
 			return initialValue;
 		}
 
-		const values = typeof column.values === 'function' ? column.values(row) : column.values;
+		const values =
+			typeof column.values === 'function'
+				? column.values(row)
+				: column.values;
 		if (!values) return null;
 
 		//* First find is there is an exact match
@@ -39,25 +50,34 @@ export default function TableCell({ row, column, data, onChange }: TableCellProp
 		});
 
 		if (exactMatch) {
-			if (typeof exactMatch === 'object' && !!exactMatch) return exactMatch.value;
+			if (typeof exactMatch === 'object' && !!exactMatch)
+				return exactMatch.value;
 			return exactMatch ?? null;
 		}
 
 		const potentialValue = values.find((v) => {
 			//* Case when v (available value) is from type: {label: string; value: any}
 			if (typeof v === 'object') {
-				return `${v.value}`.toLowerCase().includes(`${initialValue}`.toLowerCase());
+				return `${v.value}`
+					.toLowerCase()
+					.includes(`${initialValue}`.toLowerCase());
 			}
 
-			return `${v}`.toLowerCase().includes(`${initialValue}`.toLowerCase());
+			return `${v}`
+				.toLowerCase()
+				.includes(`${initialValue}`.toLowerCase());
 		});
 
-		if (typeof potentialValue === 'object' && !!potentialValue) return potentialValue.value;
+		if (typeof potentialValue === 'object' && !!potentialValue)
+			return potentialValue.value;
 		return potentialValue ?? null;
 	}, [column, row]);
 
 	useEffect(() => {
-		const prop = column.error?.type === 'mismatch' && column.error.target ? column.error.target : column.prop;
+		const prop =
+			column.error?.type === 'mismatch' && column.error.target
+				? column.error.target
+				: column.prop;
 		const initialValue = row[prop];
 
 		if (initialValue !== value) {
@@ -67,29 +87,42 @@ export default function TableCell({ row, column, data, onChange }: TableCellProp
 
 	const warning = useMemo(() => {
 		//* Nullable
-		if (!(column.allowNull ?? true) && (!value || `${value}`.length === 0)) {
+		if (
+			!(column.allowNull ?? true) &&
+			(!value || `${value}`.length === 0)
+		) {
 			return 'Valeur requise';
 		}
 
 		//* Unique
 		if (column.unique ?? false) {
-			const prop = column.error?.type === 'mismatch' && column.error.target ? column.error.target : column.prop;
+			const prop =
+				column.error?.type === 'mismatch' && column.error.target
+					? column.error.target
+					: column.prop;
 			let values = [];
 
 			if (column.allowNull ?? true) {
 				if (!value || `${value}`.length === 0) return undefined;
 
-				values = data.map((x) => x[prop]).filter((x) => x || `${x}`.length > 0);
+				values = data
+					.map((x) => x[prop])
+					.filter((x) => x || `${x}`.length > 0);
 			} else {
 				values = data.map((x) => x[prop]);
 			}
 
 			let sameValues = 0;
 
-			if (typeof column.unique === 'boolean' || column.unique === 'case') {
+			if (
+				typeof column.unique === 'boolean' ||
+				column.unique === 'case'
+			) {
 				sameValues = values.filter((x) => x === value).length;
 			} else if (column.unique === 'base') {
-				sameValues = values.filter((x) => `${x}`.toLowerCase() === `${value}`.toLowerCase()).length;
+				sameValues = values.filter(
+					(x) => `${x}`.toLowerCase() === `${value}`.toLowerCase()
+				).length;
 			}
 
 			if (sameValues > 1) {
@@ -132,7 +165,7 @@ export default function TableCell({ row, column, data, onChange }: TableCellProp
 			if (value.match(/(true|false)/i)) {
 				return 'checkbox';
 			}
-			if (!isNaN(parseFloat(value))) {
+			if (!Number.isNaN(parseFloat(value))) {
 				return 'number';
 			}
 

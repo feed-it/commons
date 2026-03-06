@@ -35,21 +35,37 @@ export const misspelled = {
 
 		//*4. pour chacune de ces clefs, extraire sa distance avec le model
 		for (const key of doubtKeys) {
-			for (const lowToleranceWrongProp of Object.keys(resultLow.wrongProps)) {
-				const distance = misspelled.levenshteinDistance(key, lowToleranceWrongProp);
+			for (const lowToleranceWrongProp of Object.keys(
+				resultLow.wrongProps
+			)) {
+				const distance = misspelled.levenshteinDistance(
+					key,
+					lowToleranceWrongProp
+				);
 
 				if (distance <= 5) {
-					resultLow.correctedJsonOutput[key] = json[0][lowToleranceWrongProp];
+					resultLow.correctedJsonOutput[key] =
+						json[0][lowToleranceWrongProp];
 				}
 			}
 		}
 
 		finalCorrection.push(resultLow.correctedJsonOutput);
 
-		const missingFromSqlModel = this.extractMissingPropsFromSqlModel(finalCorrection, model);
-		return { input: json[0], correction: finalCorrection[0], missingFromSqlModel };
+		const missingFromSqlModel = this.extractMissingPropsFromSqlModel(
+			finalCorrection,
+			model
+		);
+		return {
+			input: json[0],
+			correction: finalCorrection[0],
+			missingFromSqlModel,
+		};
 	},
-	extractMissingPropsFromSqlModel(correctedJson: BasicObject[], model: Model) {
+	extractMissingPropsFromSqlModel(
+		correctedJson: BasicObject[],
+		model: Model
+	) {
 		const modelKeys = Object.keys(model);
 		const correctedJsonKeys = Object.keys(correctedJson[0]);
 		const missingFromSqlModel = [];
@@ -66,11 +82,18 @@ export const misspelled = {
 		const output = this.compareInputWithSqlModel(json, model, tolerance);
 
 		//* 1. return corrected json 1st elt + wrong props found
-		const { outputToReturn, wrongProps } = this.makeCorrectedOutputOnly(output, model);
+		const { outputToReturn, wrongProps } = this.makeCorrectedOutputOnly(
+			output,
+			model
+		);
 
 		return { correctedJsonOutput: outputToReturn, wrongProps };
 	},
-	compareInputWithSqlModel(json: BasicObject[], model: Model, tolerance: number) {
+	compareInputWithSqlModel(
+		json: BasicObject[],
+		model: Model,
+		tolerance: number
+	) {
 		let columnsModel = Object.keys(model);
 		const firstElt = json[0];
 
@@ -91,7 +114,10 @@ export const misspelled = {
 				// avoid matching with 2 very similar columns like 'site' and 'siteId'
 				if (col in firstElt) continue;
 
-				const score = this.levenshteinDistance(key.toLowerCase(), col.toLowerCase());
+				const score = this.levenshteinDistance(
+					key.toLowerCase(),
+					col.toLowerCase()
+				);
 
 				if (score < bestScore) {
 					bestScore = score;
@@ -135,7 +161,9 @@ export const misspelled = {
 		return { outputToReturn, wrongProps };
 	},
 	levenshteinDistance(a: string, b: string) {
-		const matrix = Array.from({ length: b.length + 1 }, () => Array(a.length + 1).fill(0));
+		const matrix = Array.from({ length: b.length + 1 }, () =>
+			Array(a.length + 1).fill(0)
+		);
 
 		for (let i = 0; i <= b.length; i++) matrix[i][0] = i;
 		for (let j = 0; j <= a.length; j++) matrix[0][j] = j;

@@ -1,9 +1,9 @@
 import { checkbox, select } from '@inquirer/prompts';
 import { Chalk } from 'chalk';
-import { execSync as exec } from 'child_process';
-import { readFileSync, readdirSync, writeFileSync } from 'fs';
 import yaml from 'js-yaml';
-import { exit } from 'process';
+import { execSync as exec } from 'node:child_process';
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { exit } from 'node:process';
 
 const chalk = new Chalk({
 	level: 1,
@@ -17,7 +17,11 @@ export type MonorepoReleaseParams = {
 	/**
 	 * The folder inside .kube-yaml in the server
 	 */
-	yamlFolder: 'core-backend' | 'core-frontend' | 'veez-backend' | 'veez-frontend'
+	yamlFolder:
+		| 'core-backend'
+		| 'core-frontend'
+		| 'veez-backend'
+		| 'veez-frontend';
 };
 
 export class MonorepoRelease {
@@ -28,7 +32,7 @@ export class MonorepoRelease {
 	constructor(params: MonorepoReleaseParams) {
 		this.serverName = params.serverName;
 		this.yamlFolder = params.yamlFolder;
-	
+
 		// List available projects
 		this.projects = readdirSync(`${process.cwd()}/apps/`, 'utf-8');
 	}
@@ -37,7 +41,9 @@ export class MonorepoRelease {
 	 * Test parameters provided in constructor call
 	 */
 	private beforeStart() {
-		console.info(chalk.blue.bold('1. Testing given parameters before releasing app'));
+		console.info(
+			chalk.blue.bold('1. Testing given parameters before releasing app')
+		);
 
 		// Test serverName
 		console.info(chalk.blue('1.a. Testing ssh connexion...'));
@@ -45,10 +51,12 @@ export class MonorepoRelease {
 			exec(`ssh -T ${this.serverName}`);
 			console.info(chalk.green('Server is up!\n'));
 		} catch (error) {
-			console.error(chalk.red(`Failed to connect to ${this.serverName}`), error);
+			console.error(
+				chalk.red(`Failed to connect to ${this.serverName}`),
+				error
+			);
 			exit(1);
 		}
-
 	}
 
 	async start() {
@@ -66,32 +74,33 @@ export class MonorepoRelease {
 				required: true,
 			});
 
-			
 			if (releases.length === 0) {
-				console.error(chalk.red('You need to select a type of release'));
+				console.error(
+					chalk.red('You need to select a type of release')
+				);
 				return;
 			}
 
 			const appsToDeploy = await checkbox({
 				message: 'Which app you want to deploy ?',
-				choices: this.projects.map(x => ({
+				choices: this.projects.map((x) => ({
 					name: x,
 					value: x,
-					checked: false
+					checked: false,
 				})),
 				required: true,
-			})
+			});
 
 			if (appsToDeploy.length === 0) {
 				console.error(chalk.red('You need to select an app to deploy'));
 				return;
 			}
 
-
 			let typeVersion: string | undefined;
 			if (releases.includes('prod')) {
 				typeVersion = await select({
-					message: 'For the prod version, which level of version you want to apply?',
+					message:
+						'For the prod version, which level of version you want to apply?',
 					choices: [
 						{ name: 'Patch', value: 'patch' },
 						{ name: 'Minor', value: 'minor' },
@@ -104,13 +113,12 @@ export class MonorepoRelease {
 				if (releases.includes('prod')) {
 					this.release(app, 'prod', typeVersion);
 				}
-				
+
 				if (releases.includes('beta')) {
 					this.release(app, 'beta');
 				}
 				console.info(chalk.green.bold(`${app} successfully updated !`));
 			}
-
 		} catch (error: any) {
 			if (error.constructor.name === 'ExitPromptError') return;
 			console.error(error);
@@ -123,15 +131,28 @@ export class MonorepoRelease {
 	/**
 	 * Make a release, either for the prod or the beta
 	 */
-	private release(app: string, release: 'prod' | 'beta', typeVersion?: string) {
-		console.info(chalk.blue.bold(`\n${app.toUpperCase()}: releasing ${release} ${typeVersion ? `on ${typeVersion}` : ''}\n`));
+	private release(
+		app: string,
+		release: 'prod' | 'beta',
+		typeVersion?: string
+	) {
+		console.info(
+			chalk.blue.bold(
+				`\n${app.toUpperCase()}: releasing ${release} ${typeVersion ? `on ${typeVersion}` : ''}\n`
+			)
+		);
 
 		// Update the package version if the release is for production
 		if (release === 'prod') {
-			console.info(chalk.blue(`${app.toUpperCase()}: 1. Update package version`));
-			exec(`cd apps/${app} && npm version --no-git-tag-version ${typeVersion} && cd ../../`, {
-				stdio: 'inherit',
-			});
+			console.info(
+				chalk.blue(`${app.toUpperCase()}: 1. Update package version`)
+			);
+			exec(
+				`cd apps/${app} && npm version --no-git-tag-version ${typeVersion} && cd ../../`,
+				{
+					stdio: 'inherit',
+				}
+			);
 		}
 
 		const digest = this.docker(app, release);
@@ -144,13 +165,20 @@ export class MonorepoRelease {
 	 * Build the image, push it to the Docker Hub repository and return the new image digest.
 	 */
 	private docker(app: string, release: 'prod' | 'beta') {
-		console.info(chalk.blue.bold(`\n${app.toUpperCase()}: 2. Build Docker image and send it to Docker Hub repository`));
+		console.info(
+			chalk.blue.bold(
+				`\n${app.toUpperCase()}: 2. Build Docker image and send it to Docker Hub repository`
+			)
+		);
 
 		//* 1. Build Docker image.
 		console.info(chalk.blue(`${app.toUpperCase()}: 2.a Build image`));
-		exec(`docker build --build-arg APP=${app} -t feedit/${app}:${release} .`, {
-			stdio: 'inherit',
-		});
+		exec(
+			`docker build --build-arg APP=${app} -t feedit/${app}:${release} .`,
+			{
+				stdio: 'inherit',
+			}
+		);
 
 		//* 2. Push Docker image to the Docker Hub repository.
 		console.info(chalk.blue`${app.toUpperCase()}: 2.b Push image`);
@@ -159,21 +187,34 @@ export class MonorepoRelease {
 		});
 
 		//* 3. Fetch the new Docker image digest.
-		console.info(chalk.blue(`${app.toUpperCase()}: 2.c Fetch docker image digest`));
-		const digest = exec(`docker inspect --format="{{index .RepoDigests}}" feedit/${app}:${release}`, {
-			encoding: 'utf-8',
-		})
+		console.info(
+			chalk.blue(`${app.toUpperCase()}: 2.c Fetch docker image digest`)
+		);
+		const digest = exec(
+			`docker inspect --format="{{index .RepoDigests}}" feedit/${app}:${release}`,
+			{
+				encoding: 'utf-8',
+			}
+		)
 			.toString()
 			.replace(/(\[|\])/g, '')
 			.replace('\n', '')
 			.replace(`feedit/${app}@`, '');
 
 		if (!digest) {
-			console.error(chalk.red(`${app.toUpperCase()}: Any Docker image digest found.`));
+			console.error(
+				chalk.red(
+					`${app.toUpperCase()}: Any Docker image digest found.`
+				)
+			);
 			exit(1);
 		}
 
-		console.info(chalk.green(`${app.toUpperCase()}: Docker image successfully built and sent to Docker Hub repository`));
+		console.info(
+			chalk.green(
+				`${app.toUpperCase()}: Docker image successfully built and sent to Docker Hub repository`
+			)
+		);
 		return digest;
 	}
 
@@ -181,56 +222,96 @@ export class MonorepoRelease {
 	 * Update the Kubernetes YAML config file with the new Docker image digest.
 	 */
 	private yaml(app: string, digest: string, release: 'prod' | 'beta') {
-		console.info(chalk.blue.bold(`\n${app.toUpperCase()}: 3. Updating Kubernetes YAML config file`));
+		console.info(
+			chalk.blue.bold(
+				`\n${app.toUpperCase()}: 3. Updating Kubernetes YAML config file`
+			)
+		);
 
 		const file = `${app}${release === 'beta' ? '-beta' : ''}.yaml`;
 
-		const yamlContent = readFileSync(`${process.cwd()}/release/yamlFiles/${file}`, 'utf-8');
+		const yamlContent = readFileSync(
+			`${process.cwd()}/release/yamlFiles/${file}`,
+			'utf-8'
+		);
 		const data: any[] = yaml.loadAll(yamlContent);
 
 		let newYamlContent = yamlContent;
 
 		for (let i = 0; i < data.length; i++) {
-			if (data[i]?.spec?.template?.spec?.containers[0]?.image.includes(`feedit/${app}:${release}`)) {
+			if (
+				data[i]?.spec?.template?.spec?.containers[0]?.image.includes(
+					`feedit/${app}:${release}`
+				)
+			) {
 				const oldImage = data[i].spec.template.spec.containers[0].image;
 				const newImage = `feedit/${app}:${release}@${digest}`;
 
-				console.info(chalk.red(`${app.toUpperCase()}: Old Docker image: `), oldImage);
-				console.info(chalk.green(`${app.toUpperCase()}: New Docker image: `), newImage);
+				console.info(
+					chalk.red(`${app.toUpperCase()}: Old Docker image: `),
+					oldImage
+				);
+				console.info(
+					chalk.green(`${app.toUpperCase()}: New Docker image: `),
+					newImage
+				);
 
 				newYamlContent = newYamlContent.replace(oldImage, newImage);
 				break;
 			}
 		}
 
-		writeFileSync(`${process.cwd()}/release/yamlFiles/${file}`, newYamlContent, 'utf-8');
+		writeFileSync(
+			`${process.cwd()}/release/yamlFiles/${file}`,
+			newYamlContent,
+			'utf-8'
+		);
 
-		console.info(chalk.green(`${app.toUpperCase()}: Kubernetes YAML config file updated`));
+		console.info(
+			chalk.green(
+				`${app.toUpperCase()}: Kubernetes YAML config file updated`
+			)
+		);
 	}
 
 	/**
 	 * Send the updated Kubernetes YAML config file to the server.
 	 */
 	private scp(app: string, release: 'prod' | 'beta') {
-		console.info(chalk.blue.bold(`\n${app.toUpperCase()}: 4. Send Kubernetes YAML config file to the server`));
+		console.info(
+			chalk.blue.bold(
+				`\n${app.toUpperCase()}: 4. Send Kubernetes YAML config file to the server`
+			)
+		);
 
 		const file = `${app}${release === 'beta' ? '-beta' : ''}.yaml`;
 		const filePath = `${process.cwd()}/release/yamlFiles/${file}`;
 
-		exec(`scp -P 91 ${filePath} ${this.serverName}:.kube-yaml/${this.yamlFolder}`, {
-			stdio: 'inherit',
-		});
+		exec(
+			`scp -P 91 ${filePath} ${this.serverName}:.kube-yaml/${this.yamlFolder}`,
+			{
+				stdio: 'inherit',
+			}
+		);
 
-		console.info(chalk.green(`${app.toUpperCase()}: Kubernetes YAML Config sent to ${this.serverName}`));
+		console.info(
+			chalk.green(
+				`${app.toUpperCase()}: Kubernetes YAML Config sent to ${this.serverName}`
+			)
+		);
 	}
 
 	/**
 	 * Push the modifications (YAML file and package.json) to Git and add a tag version to this commit.
 	 */
 	private git(app: string, release: 'prod' | 'beta') {
-		const { version: packageVersion } = JSON.parse(readFileSync(`${process.cwd()}/apps/${app}/package.json`, 'utf-8'));
+		const { version: packageVersion } = JSON.parse(
+			readFileSync(`${process.cwd()}/apps/${app}/package.json`, 'utf-8')
+		);
 
-		console.info(chalk.blue.bold(`${app.toUpperCase()}: 5. Commit package`));
+		console.info(
+			chalk.blue.bold(`${app.toUpperCase()}: 5. Commit package`)
+		);
 
 		// Push new package.json version
 		let commitMessage = `release(${app}): ${packageVersion} version`;

@@ -1,4 +1,4 @@
-import { MouseEventHandler, useCallback, useState } from 'react';
+import { type MouseEventHandler, useCallback, useState } from 'react';
 import './styles.scss';
 
 export type ToggleButtonProps = {
@@ -8,7 +8,12 @@ export type ToggleButtonProps = {
 	readonly?: boolean;
 };
 
-export function ToggleButton({ checked = false, id, onChange, readonly = false }: ToggleButtonProps) {
+export function ToggleButton({
+	checked = false,
+	id,
+	onChange,
+	readonly = false,
+}: ToggleButtonProps) {
 	const [localChecked, setLocalChecked] = useState(checked);
 
 	const onClick = useCallback<MouseEventHandler<HTMLButtonElement>>(

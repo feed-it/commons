@@ -10,7 +10,9 @@ export default function useDropdown({ values, defaultValue }: useDropdownType) {
 	const containerRef = useRef(null);
 
 	const [isOpened, setIsOpened] = useState(false);
-	const [selectedValue, setSelectedValue] = useState(values.find((x) => x.value === defaultValue));
+	const [selectedValue, setSelectedValue] = useState(
+		values.find((x) => x.value === defaultValue)
+	);
 
 	useEffect(() => {
 		setSelectedValue(values.find((x) => x.value === defaultValue));

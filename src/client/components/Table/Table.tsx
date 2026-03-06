@@ -1,11 +1,11 @@
-import { CSSProperties, RefObject } from 'react';
+import type { CSSProperties, RefObject } from 'react';
 import Trash from '../assets/Trash';
 import useTable from './hooks/useTable';
 import './styles.scss';
+import { Pagination } from '../Pagination';
 import TableCell from './TableCell';
 import TableColumn from './TableColumn';
-import { Action, Column, ExtendedColumn, TableHandle } from './types';
-import { Pagination } from '../Pagination';
+import type { Action, Column, ExtendedColumn, TableHandle } from './types';
 
 export type TableProps = {
 	ref?: RefObject<TableHandle>;
@@ -184,7 +184,8 @@ function renderRow(
 					onChange={(value) =>
 						void updateData(
 							row[uniqueValueColumn],
-							column.error?.type === 'mismatch' && column.error.target
+							column.error?.type === 'mismatch' &&
+								column.error.target
 								? column.error.target
 								: column.prop,
 							value
@@ -213,7 +214,9 @@ function renderRow(
 								} as CSSProperties
 							}
 						>
-							{typeof action.icon === 'function' ? action.icon() : action.icon}
+							{typeof action.icon === 'function'
+								? action.icon()
+								: action.icon}
 						</button>
 					))}
 					{canDeleteRows && (
@@ -222,7 +225,9 @@ function renderRow(
 							className='action-button'
 							title='Supprimer la ligne'
 							aria-label='Supprimer la ligne'
-							onClick={() => void deleteRow(row[uniqueValueColumn])}
+							onClick={() =>
+								void deleteRow(row[uniqueValueColumn])
+							}
 							style={
 								{
 									'--color': 'var(--red)',

@@ -1,4 +1,4 @@
-import { DependencyList, useCallback, useState } from 'react';
+import { type DependencyList, useCallback, useState } from 'react';
 
 export function usePromise<T extends () => Promise<void>>(
 	action: T,

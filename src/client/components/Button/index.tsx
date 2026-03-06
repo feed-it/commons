@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, CSSProperties } from 'react';
+import type { ButtonHTMLAttributes, CSSProperties } from 'react';
 import './styles.scss';
 
 export type ButtonProps = {

@@ -1,7 +1,14 @@
-import { RefObject, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react';
-import { Column, ExtendedColumn, TableHandle } from '../types';
-import { misspelled } from '../utils/mispelled';
+import {
+	type RefObject,
+	useCallback,
+	useEffect,
+	useImperativeHandle,
+	useMemo,
+	useState,
+} from 'react';
+import type { Column, ExtendedColumn, TableHandle } from '../types';
 import { correctRow, correctRows } from '../utils/correction';
+import { misspelled } from '../utils/mispelled';
 
 interface useTableProps {
 	allowMismatch: boolean;
@@ -17,7 +24,14 @@ export type SortByType = {
 	order: 'asc' | 'desc';
 };
 
-export default function useTable({ allowMismatch, columns, data, pagination, uniqueValueColumn, ref }: useTableProps) {
+export default function useTable({
+	allowMismatch,
+	columns,
+	data,
+	pagination,
+	uniqueValueColumn,
+	ref,
+}: useTableProps) {
 	const [localData, setLocalData] = useState(data);
 	const [sortBy, setSortBy] = useState<SortByType | null>(null);
 
@@ -38,10 +52,14 @@ export default function useTable({ allowMismatch, columns, data, pagination, uni
 		});
 
 		if (sortBy.order === 'desc') {
-			return localData.toSorted((a, b) => collator.compare(b[sortBy.prop], a[sortBy.prop]));
+			return localData.toSorted((a, b) =>
+				collator.compare(b[sortBy.prop], a[sortBy.prop])
+			);
 		}
 
-		return localData.toSorted((a, b) => collator.compare(a[sortBy.prop], b[sortBy.prop]));
+		return localData.toSorted((a, b) =>
+			collator.compare(a[sortBy.prop], b[sortBy.prop])
+		);
 	}, [localData, sortBy]);
 
 	// Applying pagination if enabled
@@ -71,7 +89,9 @@ export default function useTable({ allowMismatch, columns, data, pagination, uni
 	const updateData = useCallback(
 		(id: any, prop: string, value: any) => {
 			setLocalData((prev) => {
-				const index = prev.findIndex((x) => x[uniqueValueColumn] === id);
+				const index = prev.findIndex(
+					(x) => x[uniqueValueColumn] === id
+				);
 				if (index === -1) return prev;
 
 				const newRow = {
@@ -88,7 +108,9 @@ export default function useTable({ allowMismatch, columns, data, pagination, uni
 	const deleteRow = useCallback(
 		(id: any) => {
 			setLocalData((prev) => {
-				const index = prev.findIndex((x) => x[uniqueValueColumn] === id);
+				const index = prev.findIndex(
+					(x) => x[uniqueValueColumn] === id
+				);
 				if (index === -1) return prev;
 				return prev.toSpliced(index, 1);
 			});
@@ -133,7 +155,11 @@ export default function useTable({ allowMismatch, columns, data, pagination, uni
 		for (const row of localData) {
 			for (const column of Object.keys(row)) {
 				if (column === 'warnings' || dataColumns.has(column)) continue;
-				if (column === uniqueValueColumn && columns.findIndex((x) => x.prop === uniqueValueColumn) === -1)
+				if (
+					column === uniqueValueColumn &&
+					columns.findIndex((x) => x.prop === uniqueValueColumn) ===
+						-1
+				)
 					continue;
 
 				dataColumns.add(column);
@@ -197,7 +223,9 @@ export default function useTable({ allowMismatch, columns, data, pagination, uni
 			dataColumns.delete(oldColumn);
 
 			//* Also remove the matchedColumn (newColumn var) from remainingColumns
-			const index = remainingColumns.findIndex((x) => x.prop === newColumn);
+			const index = remainingColumns.findIndex(
+				(x) => x.prop === newColumn
+			);
 			if (index > -1) {
 				remainingColumns.splice(index, 1);
 			}
@@ -220,7 +248,11 @@ export default function useTable({ allowMismatch, columns, data, pagination, uni
 	// --------------------------------------------------- Custom ref ------------------------------------------------------
 	const getData = useCallback(() => {
 		const validData = [];
-		if (!reviewedColumns.some((x) => Object.hasOwn(x, 'error') && x.error?.type !== 'mismatch')) {
+		if (
+			!reviewedColumns.some(
+				(x) => Object.hasOwn(x, 'error') && x.error?.type !== 'mismatch'
+			)
+		) {
 			for (const row of localData) {
 				if (Object.hasOwn(row, 'warnings')) {
 					continue;
@@ -235,23 +267,38 @@ export default function useTable({ allowMismatch, columns, data, pagination, uni
 		const errorOnOthers = new Map();
 
 		for (const column of reviewedColumns) {
-			const prop = column.error?.type === 'mismatch' && column.error.target ? column.error.target : column.prop;
+			const prop =
+				column.error?.type === 'mismatch' && column.error.target
+					? column.error.target
+					: column.prop;
 
 			for (const row of localData) {
-				if (!(column.allowNull ?? true) && !row[prop] && !errorOnNull.has(row[uniqueValueColumn])) {
+				if (
+					!(column.allowNull ?? true) &&
+					!row[prop] &&
+					!errorOnNull.has(row[uniqueValueColumn])
+				) {
 					errorOnNull.set(row[uniqueValueColumn], row);
 				}
 
 				if (column.unique) {
-					const matches = localData.filter((x) => x[prop] === row[prop]).length;
+					const matches = localData.filter(
+						(x) => x[prop] === row[prop]
+					).length;
 
-					if (matches > 1 && !errorOnUnique.has(row[uniqueValueColumn])) {
+					if (
+						matches > 1 &&
+						!errorOnUnique.has(row[uniqueValueColumn])
+					) {
 						errorOnUnique.set(row[uniqueValueColumn], row);
 					}
 				}
 
 				if (typeof column.validate === 'function') {
-					if (column.validate(row[prop]) && !errorOnOthers.has(row[uniqueValueColumn])) {
+					if (
+						column.validate(row[prop]) &&
+						!errorOnOthers.has(row[uniqueValueColumn])
+					) {
 						errorOnOthers.set(row[uniqueValueColumn], row);
 					}
 				}
@@ -262,9 +309,15 @@ export default function useTable({ allowMismatch, columns, data, pagination, uni
 			source: localData,
 			data: correctRows(reviewedColumns, localData),
 			validData: validData,
-			errorOnNull: correctRows(reviewedColumns, [...errorOnNull.values()]),
-			errorOnUnique: correctRows(reviewedColumns, [...errorOnUnique.values()]),
-			errorOnOthers: correctRows(reviewedColumns, [...errorOnOthers.values()]),
+			errorOnNull: correctRows(reviewedColumns, [
+				...errorOnNull.values(),
+			]),
+			errorOnUnique: correctRows(reviewedColumns, [
+				...errorOnUnique.values(),
+			]),
+			errorOnOthers: correctRows(reviewedColumns, [
+				...errorOnOthers.values(),
+			]),
 		};
 	}, [localData, reviewedColumns, uniqueValueColumn]);
 

@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import { Button } from '../Button';
 import useDropdown from './hooks/useDropdown';
 import './styles.scss';
@@ -26,7 +26,13 @@ export function Dropdown({
 	hideSelectedValue = false,
 	legacyDropdown = false,
 }: DropdownProps) {
-	const { containerRef, isOpened, setIsOpened, selectedValue, setSelectedValue } = useDropdown({
+	const {
+		containerRef,
+		isOpened,
+		setIsOpened,
+		selectedValue,
+		setSelectedValue,
+	} = useDropdown({
 		values,
 		defaultValue,
 	});
@@ -48,7 +54,9 @@ export function Dropdown({
 					} as CSSProperties
 				}
 				onChange={(ev) => {
-					const selectedOption = values.find((option) => option.value === ev.target.value);
+					const selectedOption = values.find(
+						(option) => option.value === ev.target.value
+					);
 
 					if (selectedOption) {
 						setSelectedValue(selectedOption);
@@ -89,7 +97,9 @@ export function Dropdown({
 				onClick={() => setIsOpened((prev) => !prev)}
 			>
 				{icon}
-				{hideSelectedValue || !selectedValue ? title : selectedValue.label}
+				{hideSelectedValue || !selectedValue
+					? title
+					: selectedValue.label}
 			</Button>
 
 			<div
@@ -97,7 +107,8 @@ export function Dropdown({
 				className={`dropdown-popover`}
 				aria-expanded={isOpened}
 				style={{
-					[placement.split('-')[0] === 'bottom' ? 'top' : 'bottom']: 'calc(100% + 5px)',
+					[placement.split('-')[0] === 'bottom' ? 'top' : 'bottom']:
+						'calc(100% + 5px)',
 					[placement.split('-')[1]]: 0,
 				}}
 			>

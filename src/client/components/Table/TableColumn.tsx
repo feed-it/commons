@@ -1,9 +1,14 @@
-import { ChangeEvent, Dispatch, SetStateAction, useCallback } from 'react';
+import {
+	type ChangeEvent,
+	type Dispatch,
+	type SetStateAction,
+	useCallback,
+} from 'react';
 import { Arrow } from '../assets/Arrow';
 import { Sort } from '../assets/Sort';
 import Trash from '../assets/Trash';
-import { SortByType } from './hooks/useTable';
-import { ExtendedColumn } from './types';
+import type { SortByType } from './hooks/useTable';
+import type { ExtendedColumn } from './types';
 
 type TableColumnProps = {
 	column: ExtendedColumn;
@@ -51,12 +56,15 @@ export default function TableColumn({
 
 	if (column.error) {
 		return (
-			<th className={`error ${column.error.type === 'mismatch' ? 'warn' : ''}`}>
+			<th
+				className={`error ${column.error.type === 'mismatch' ? 'warn' : ''}`}
+			>
 				<div className='cell-container'>
 					<div className='select-container'>
 						{column.error.type === 'mismatch' ? (
 							<p>
-								{column.label} (<s>{column.error.target}</s> {column.prop})
+								{column.label} (<s>{column.error.target}</s>{' '}
+								{column.prop})
 							</p>
 						) : (
 							<p>{column.label}</p>
@@ -90,12 +98,22 @@ export default function TableColumn({
 							title='Trier la donnée'
 							aria-label='Trier la donnée'
 							style={{
-								opacity: sortBy?.prop === column.prop ? 1 : undefined,
+								opacity:
+									sortBy?.prop === column.prop
+										? 1
+										: undefined,
 							}}
 							onClick={onSortClick}
 						>
 							{sortBy && sortBy.prop === column.prop ? (
-								<Arrow style={{ rotate: sortBy.order === 'asc' ? '-90deg' : '90deg' }} />
+								<Arrow
+									style={{
+										rotate:
+											sortBy.order === 'asc'
+												? '-90deg'
+												: '90deg',
+									}}
+								/>
 							) : (
 								<Sort />
 							)}
@@ -128,12 +146,20 @@ export default function TableColumn({
 						title='Trier la donnée'
 						aria-label='Trier la donnée'
 						style={{
-							opacity: sortBy?.prop === column.prop ? 1 : undefined,
+							opacity:
+								sortBy?.prop === column.prop ? 1 : undefined,
 						}}
 						onClick={onSortClick}
 					>
 						{sortBy && sortBy.prop === column.prop ? (
-							<Arrow style={{ rotate: sortBy.order === 'asc' ? '-90deg' : '90deg' }} />
+							<Arrow
+								style={{
+									rotate:
+										sortBy.order === 'asc'
+											? '-90deg'
+											: '90deg',
+								}}
+							/>
 						) : (
 							<Sort />
 						)}

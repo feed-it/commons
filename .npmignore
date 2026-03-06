@@ -1,14 +1,13 @@
 .github
-.prettierignore
-.prettierrc.json
+biome.json
 .versionrc
 .versionrc.js
 CHANGELOG.md
 README.md
+INSTALL.md
 node_modules
 nodemon.json
 package-lock.json
 rollup.config.js
 src
 tsconfig.json
-eslint.config.mjs

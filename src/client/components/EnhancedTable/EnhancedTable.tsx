@@ -1,9 +1,9 @@
-import { JSX, MouseEventHandler } from 'react';
+import type { JSX, MouseEventHandler } from 'react';
 import { Refresh } from '../assets/Refresh';
 import { Button } from '../Button';
 import { Searchbar } from '../Searchbar/Searchbar';
 import { Table } from '../Table';
-import { TableProps } from '../Table/Table';
+import type { TableProps } from '../Table/Table';
 
 export type EnhancedTableProps = TableProps & {
 	headerButtons?: {
@@ -18,24 +18,24 @@ export type EnhancedTableProps = TableProps & {
 };
 
 export function EnhancedTable({
-								  headerButtons = [],
-								  refresh,
-								  ...tableProps
-							  }: EnhancedTableProps) {
+	headerButtons = [],
+	refresh,
+	...tableProps
+}: EnhancedTableProps) {
 	return (
-		<div className="enhanced-table-container">
-			<div className="enhanced-table-header">
+		<div className='enhanced-table-container'>
+			<div className='enhanced-table-header'>
 				<Searchbar />
-				
+
 				{refresh && (
 					<Button
-						type="button"
-						title="Rafraîchir les données"
-						aria-title="Rafraîchir les données"
-						color="var(--dark-gray)"
-						textColor="var(--dark-gray)"
-						hoverColor="var(--blue)"
-						textHoverColor="var(--white)"
+						type='button'
+						title='Rafraîchir les données'
+						aria-title='Rafraîchir les données'
+						color='var(--dark-gray)'
+						textColor='var(--dark-gray)'
+						hoverColor='var(--blue)'
+						textHoverColor='var(--white)'
 						outline
 						squared
 						onClick={refresh}
@@ -43,24 +43,26 @@ export function EnhancedTable({
 						<Refresh />
 					</Button>
 				)}
-				
+
 				{headerButtons.length > 0 && (
-					<div className="header-buttons-container">
+					<div className='header-buttons-container'>
 						{headerButtons.map((button) => (
 							<Button
 								key={crypto.randomUUID()}
-								type="button"
+								type='button'
 								color={button.color}
 								onClick={button.onClick}
 							>
-								{typeof button.icon === 'function' ? button.icon() : button.icon}
+								{typeof button.icon === 'function'
+									? button.icon()
+									: button.icon}
 								{button.label}
 							</Button>
 						))}
 					</div>
 				)}
 			</div>
-			
+
 			<Table {...tableProps} />
 		</div>
 	);

@@ -1,4 +1,4 @@
-import { HTMLInputTypeAttribute, JSX } from 'react';
+import type { HTMLInputTypeAttribute, JSX } from 'react';
 
 export type Column = {
 	label: string;
@@ -14,9 +14,17 @@ export type Column = {
 	 *
 	 * all other available values are the ones from HTML input type property.
 	 */
-	type: 'auto' | 'auto-non-numeric' | 'select' | 'gauge' | HTMLInputTypeAttribute;
+	type:
+		| 'auto'
+		| 'auto-non-numeric'
+		| 'select'
+		| 'gauge'
+		| HTMLInputTypeAttribute;
 
-	values?: string[] | { label: string; value: string }[] | ((row: any) => { label: string; value: string }[]);
+	values?:
+		| string[]
+		| { label: string; value: string }[]
+		| ((row: any) => { label: string; value: string }[]);
 	allowNull?: boolean;
 	editable?: boolean;
 	unique?: boolean | 'base' | 'case';

@@ -1,4 +1,4 @@
-import { ExtendedColumn } from '../types';
+import type { ExtendedColumn } from '../types';
 
 export function correctRow(columns: ExtendedColumn[], row: any) {
 	const reviewedRow: { [key: string]: any } = {};

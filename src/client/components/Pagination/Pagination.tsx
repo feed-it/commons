@@ -15,7 +15,12 @@ export type PaginationProps = {
 	elevation?: boolean;
 };
 
-export function Pagination({ value, max, onChange = () => {}, elevation = false }: PaginationProps) {
+export function Pagination({
+	value,
+	max,
+	onChange = () => {},
+	elevation = false,
+}: PaginationProps) {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const changePageByOffset = (offset: number) => {

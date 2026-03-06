@@ -1,5 +1,12 @@
 import RCSlider from 'rc-slider';
-import { CSSProperties, HTMLAttributes, ReactElement, useCallback, useEffect, useState } from 'react';
+import {
+	type CSSProperties,
+	type HTMLAttributes,
+	type ReactElement,
+	useCallback,
+	useEffect,
+	useState,
+} from 'react';
 import './styles.scss';
 
 export type SliderProps = {
@@ -35,7 +42,10 @@ export function Slider({
 	);
 
 	const renderThumb = useCallback(
-		(node: ReactElement<HTMLAttributes<HTMLDivElement>>, { value }: { value: number }) => {
+		(
+			node: ReactElement<HTMLAttributes<HTMLDivElement>>,
+			{ value }: { value: number }
+		) => {
 			let position: CSSProperties = {
 				top: '-5px',
 				left: '50%',
