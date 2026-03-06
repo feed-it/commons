@@ -18,26 +18,16 @@ export type MonorepoReleaseParams = {
 	 * The folder inside .kube-yaml in the server
 	 */
 	yamlFolder: 'core-backend' | 'core-frontend' | 'veez-backend' | 'veez-frontend'
-	/**
-	 * If the yaml files have a prefix in the name
-	 * Example: 
-	 * 		Project: "initcustomer" in "/apps/initcustomer"
-	 * 		Yaml: "veez-initcustomer.yaml" and/or "veez-initcustomer-beta.yaml"
-	 * 		Prefix: "veez-"
-	 */
-	yamlPrefix?: string;
 };
 
 export class MonorepoRelease {
 	private readonly serverName: string = '';
 	private readonly yamlFolder: string = '';
-	private readonly yamlPrefix: string = '';
 	private readonly projects: string[] = [];
 
 	constructor(params: MonorepoReleaseParams) {
 		this.serverName = params.serverName;
 		this.yamlFolder = params.yamlFolder;
-		this.yamlPrefix = params.yamlPrefix ?? '';
 	
 		// List available projects
 		this.projects = readdirSync(`${process.cwd()}/apps/`, 'utf-8');
@@ -193,7 +183,7 @@ export class MonorepoRelease {
 	private yaml(app: string, digest: string, release: 'prod' | 'beta') {
 		console.info(chalk.blue.bold(`\n${app.toUpperCase()}: 3. Updating Kubernetes YAML config file`));
 
-		const file = `${this.yamlPrefix}${app}${release === 'beta' ? '-beta' : ''}.yaml`;
+		const file = `${app}${release === 'beta' ? '-beta' : ''}.yaml`;
 
 		const yamlContent = readFileSync(`${process.cwd()}/release/yamlFiles/${file}`, 'utf-8');
 		const data: any[] = yaml.loadAll(yamlContent);
@@ -224,7 +214,7 @@ export class MonorepoRelease {
 	private scp(app: string, release: 'prod' | 'beta') {
 		console.info(chalk.blue.bold(`\n${app.toUpperCase()}: 4. Send Kubernetes YAML config file to the server`));
 
-		const file = `${this.yamlPrefix}${app}${release === 'beta' ? '-beta' : ''}.yaml`;
+		const file = `${app}${release === 'beta' ? '-beta' : ''}.yaml`;
 		const filePath = `${process.cwd()}/release/yamlFiles/${file}`;
 
 		exec(`scp -P 91 ${filePath} ${this.serverName}:.kube-yaml/${this.yamlFolder}`, {
