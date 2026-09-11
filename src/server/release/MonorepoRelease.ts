@@ -104,6 +104,7 @@ export class MonorepoRelease {
 					choices: [
 						{ name: 'Patch', value: 'patch' },
 						{ name: 'Minor', value: 'minor' },
+						{ name: 'Major', value: 'major' },
 					],
 					default: 'patch',
 				});
