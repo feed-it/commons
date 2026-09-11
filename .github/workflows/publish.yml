@@ -10,7 +10,7 @@ jobs:
         runs-on: ubuntu-latest
         permissions:
             contents: read
-            packages: write
+            id-token: write
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v4
@@ -30,6 +30,4 @@ jobs:
             -   name: Build package
                 run: pnpm run build
             -   name: Publish package
-                run: pnpm publish --no-git-checks --access public
-                env:
-                    NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+                run: npm publish --access public
