@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.21.0](https://github.com/feed-it/commons/compare/v1.20.4...v1.21.0) (2026-09-11)
+
+
+### Features
+
+* npm publish oicd ([ad0d751](https://github.com/feed-it/commons/commit/ad0d7519f7b82693eb63adf71cd00b58c42339e3))
+
 ### [1.20.4](https://github.com/feed-it/commons/compare/v1.20.3...v1.20.4) (2026-09-11)
 
 ### [1.20.3](https://github.com/feed-it/commons/compare/v1.20.2...v1.20.3) (2026-03-06)
