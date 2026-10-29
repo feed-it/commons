@@ -182,7 +182,7 @@ export class MonorepoRelease {
 		);
 
 		exec(
-			`docker buildx build --provenance=true --sbom=true --build-arg APP=${app} -t feedit/${app}:${release} --push --metadata-file ./build-metadata.json .`,
+			`docker buildx build --platform linux/amd64,linux/arm64 --provenance=true --sbom=true --build-arg APP=${app} -t feedit/${app}:${release} --push --metadata-file ./build-metadata.json .`,
 			{
 				stdio: 'inherit',
 			}
