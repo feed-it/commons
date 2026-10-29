@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.21.1](https://github.com/feed-it/commons/compare/v1.21.0...v1.21.1) (2026-10-29)
+
+
+### Bug Fixes
+
+* docker buildx specify linux architecture ([7c686f2](https://github.com/feed-it/commons/commit/7c686f241546702e5e148d9686895525ac797daa))
+
 ## [1.21.0](https://github.com/feed-it/commons/compare/v1.20.4...v1.21.0) (2026-09-11)
 
 
