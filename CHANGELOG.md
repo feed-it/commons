@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.22.0](https://github.com/feed-it/commons/compare/v1.21.1...v1.22.0) (2026-11-09)
+
+
+### Features
+
+* **release:** add dry-run mode ([a9e6159](https://github.com/feed-it/commons/commit/a9e6159e21a09c39e5d52bde17a80cbb71dafbf1))
+* **release:** support fallback servers and add ssh/scp timeouts ([db91d0d](https://github.com/feed-it/commons/commit/db91d0d2708e7a51aeab8da1d4165583ece24653))
+
+
+### Documentation
+
+* add AGENTS.md and CLAUDE.md ([9630c5f](https://github.com/feed-it/commons/commit/9630c5f131ae1d0b8d3c3afdd517b10ec43fefaa))
+
 ### [1.21.1](https://github.com/feed-it/commons/compare/v1.21.0...v1.21.1) (2026-10-29)
 
 
