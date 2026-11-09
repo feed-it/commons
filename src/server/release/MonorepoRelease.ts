@@ -22,16 +22,24 @@ export type MonorepoReleaseParams = {
 		| 'core-frontend'
 		| 'veez-backend'
 		| 'veez-frontend';
+	/**
+	 * Dry run: the Docker image is built but not pushed, nothing is sent
+	 * to the server (scp), and no file/git change is made.
+	 * @default true when `--dry-run` is in the CLI arguments, false otherwise
+	 */
+	dryRun?: boolean;
 };
 
 export class MonorepoRelease {
 	private readonly serverName: string = '';
 	private readonly yamlFolder: string = '';
 	private readonly projects: string[] = [];
+	private readonly dryRun: boolean;
 
 	constructor(params: MonorepoReleaseParams) {
 		this.serverName = params.serverName;
 		this.yamlFolder = params.yamlFolder;
+		this.dryRun = params.dryRun ?? process.argv.includes('--dry-run');
 
 		// List available projects
 		this.projects = readdirSync(`${process.cwd()}/apps/`, 'utf-8');
@@ -60,6 +68,13 @@ export class MonorepoRelease {
 	}
 
 	async start() {
+		if (this.dryRun) {
+			console.info(
+				chalk.yellow.bold(
+					'DRY RUN: docker push, scp, yaml/package.json updates and git are skipped\n'
+				)
+			);
+		}
 		this.beforeStart();
 
 		try {
@@ -144,7 +159,13 @@ export class MonorepoRelease {
 		);
 
 		// Update the package version if the release is for production
-		if (release === 'prod') {
+		if (release === 'prod' && this.dryRun) {
+			console.info(
+				chalk.yellow(
+					`${app.toUpperCase()}: [dry-run] skipping package version update (${typeVersion})`
+				)
+			);
+		} else if (release === 'prod') {
 			console.info(
 				chalk.blue(`${app.toUpperCase()}: 1. Update package version`)
 			);
@@ -182,11 +203,22 @@ export class MonorepoRelease {
 		);
 
 		exec(
-			`docker buildx build --platform linux/amd64,linux/arm64 --provenance=true --sbom=true --build-arg APP=${app} -t feedit/${app}:${release} --push --metadata-file ./build-metadata.json .`,
+			`docker buildx build --platform linux/amd64,linux/arm64 --provenance=true --sbom=true --build-arg APP=${app} -t feedit/${app}:${release} ${this.dryRun ? '' : '--push '}--metadata-file ./build-metadata.json .`,
 			{
 				stdio: 'inherit',
 			}
 		);
+
+		if (this.dryRun) {
+			// Nothing was pushed, so there is no registry digest.
+			rmSync('./build-metadata.json', { force: true });
+			console.info(
+				chalk.yellow(
+					`${app.toUpperCase()}: [dry-run] image built, push skipped`
+				)
+			);
+			return 'sha256:dry-run';
+		}
 
 		//* 3. Fetch the new Docker image digest.
 		console.info(
@@ -259,6 +291,15 @@ export class MonorepoRelease {
 			}
 		}
 
+		if (this.dryRun) {
+			console.info(
+				chalk.yellow(
+					`${app.toUpperCase()}: [dry-run] YAML file not written`
+				)
+			);
+			return;
+		}
+
 		writeFileSync(
 			`${process.cwd()}/release/yamlFiles/${file}`,
 			newYamlContent,
@@ -285,12 +326,18 @@ export class MonorepoRelease {
 		const file = `${app}${release === 'beta' ? '-beta' : ''}.yaml`;
 		const filePath = `${process.cwd()}/release/yamlFiles/${file}`;
 
-		exec(
-			`scp -P 91 ${filePath} ${this.serverName}:.kube-yaml/${this.yamlFolder}`,
-			{
-				stdio: 'inherit',
-			}
-		);
+		const scpCommand = `scp -P 91 ${filePath} ${this.serverName}:.kube-yaml/${this.yamlFolder}`;
+
+		if (this.dryRun) {
+			console.info(
+				chalk.yellow(`${app.toUpperCase()}: [dry-run] ${scpCommand}`)
+			);
+			return;
+		}
+
+		exec(scpCommand, {
+			stdio: 'inherit',
+		});
 
 		console.info(
 			chalk.green(
@@ -303,6 +350,15 @@ export class MonorepoRelease {
 	 * Push the modifications (YAML file and package.json) to Git and add a tag version to this commit.
 	 */
 	private git(app: string, release: 'prod' | 'beta') {
+		if (this.dryRun) {
+			console.info(
+				chalk.yellow(
+					`${app.toUpperCase()}: [dry-run] skipping git commit/push`
+				)
+			);
+			return;
+		}
+
 		const { version: packageVersion } = JSON.parse(
 			readFileSync(`${process.cwd()}/apps/${app}/package.json`, 'utf-8')
 		);

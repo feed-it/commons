@@ -44,6 +44,12 @@ export type ReleaseScriptParams = {
 		**Need to be located in `release` folder at the root level of the project**
 	 */
 	betaYamlFile?: string;
+	/**
+	 * Dry run: the Docker image is built but not pushed, nothing is sent
+	 * to the server (scp), and no file/git change is made.
+	 * @default true when `--dry-run` is in the CLI arguments, false otherwise
+	 */
+	dryRun?: boolean;
 };
 
 export class ReleaseScript {
@@ -53,12 +59,14 @@ export class ReleaseScript {
 	private readonly serverName: string = '';
 	private readonly yamlFolder: string = '';
 	private readonly betaYamlFile: string = '';
+	private readonly dryRun: boolean;
 
 	constructor(params: ReleaseScriptParams) {
 		this.dockerImage = params.dockerImage;
 		this.serverName = params.serverName;
 		this.yamlFile = path.parse(params.yamlFile).name;
 		this.yamlFolder = params.yamlFolder;
+		this.dryRun = params.dryRun ?? process.argv.includes('--dry-run');
 
 		if (Object.hasOwn(params, 'appName'))
 			this.appName = params.appName as string;
@@ -108,6 +116,13 @@ export class ReleaseScript {
 	}
 
 	async start() {
+		if (this.dryRun) {
+			console.info(
+				chalk.yellow.bold(
+					'DRY RUN: docker push, scp, yaml/package.json updates and git are skipped\n'
+				)
+			);
+		}
 		this.beforeStart();
 
 		try {
@@ -164,7 +179,13 @@ export class ReleaseScript {
 		);
 
 		// Update the package version if the release is for production
-		if (release === 'prod') {
+		if (release === 'prod' && this.dryRun) {
+			console.info(
+				chalk.yellow(
+					`1. [dry-run] skipping package version update (${typeVersion})`
+				)
+			);
+		} else if (release === 'prod') {
 			console.info(chalk.blue('1. Update package version'));
 			exec(`npm version --no-git-tag-version ${typeVersion}`, {
 				stdio: 'inherit',
@@ -198,11 +219,18 @@ export class ReleaseScript {
 			}
 		);
 		exec(
-			`docker buildx build --provenance=true --sbom=true -t ${this.dockerImage}:${release} --push --metadata-file ./build-metadata.json .`,
+			`docker buildx build --provenance=true --sbom=true -t ${this.dockerImage}:${release} ${this.dryRun ? '' : '--push '}--metadata-file ./build-metadata.json .`,
 			{
 				stdio: 'inherit',
 			}
 		);
+
+		if (this.dryRun) {
+			// Nothing was pushed, so there is no registry digest.
+			rmSync('./build-metadata.json', { force: true });
+			console.info(chalk.yellow('[dry-run] image built, push skipped'));
+			return 'sha256:dry-run';
+		}
 
 		//* 3. Fetch the new Docker image digest.
 		console.info(chalk.blue('2.b Fetch docker image digest'));
@@ -261,6 +289,11 @@ export class ReleaseScript {
 			}
 		}
 
+		if (this.dryRun) {
+			console.info(chalk.yellow('[dry-run] YAML file not written'));
+			return;
+		}
+
 		writeFileSync(
 			`${process.cwd()}/release/${file}.yaml`,
 			newYamlContent,
@@ -283,12 +316,16 @@ export class ReleaseScript {
 		const file = release === 'beta' ? this.betaYamlFile : this.yamlFile;
 		const filePath = `${process.cwd()}/release/${file}.yaml`;
 
-		exec(
-			`scp -P 91 ${filePath} ${this.serverName}:.kube-yaml/${this.yamlFolder}`,
-			{
-				stdio: 'inherit',
-			}
-		);
+		const scpCommand = `scp -P 91 ${filePath} ${this.serverName}:.kube-yaml/${this.yamlFolder}`;
+
+		if (this.dryRun) {
+			console.info(chalk.yellow(`[dry-run] ${scpCommand}`));
+			return;
+		}
+
+		exec(scpCommand, {
+			stdio: 'inherit',
+		});
 
 		console.info(
 			chalk.green(`Kubernetes YAML Config sent to ${this.serverName}`)
@@ -299,6 +336,13 @@ export class ReleaseScript {
 	 * Push the modifications (YAML file and package.json) to Git and add a tag version to this commit.
 	 */
 	private git(release: 'prod' | 'beta') {
+		if (this.dryRun) {
+			console.info(
+				chalk.yellow('[dry-run] skipping git commit/push/tag')
+			);
+			return;
+		}
+
 		const { version: packageVersion } = JSON.parse(
 			readFileSync(`${process.cwd()}/package.json`, 'utf-8')
 		);
