@@ -10,6 +10,13 @@ const chalk = new Chalk({
 	level: 1,
 });
 
+/** Max seconds to establish the SSH connection (ssh and scp). */
+const SSH_CONNECT_TIMEOUT_S = 10;
+/** Hard limit for the `ssh -T` connection test. */
+const SSH_TIMEOUT_MS = 15_000;
+/** Hard limit for the YAML file transfer. */
+const SCP_TIMEOUT_MS = 60_000;
+
 export type ReleaseScriptParams = {
 	/**
 	 * App name, used in logs
@@ -28,8 +35,11 @@ export type ReleaseScriptParams = {
 	yamlFile: string;
 	/**
 	 * The SSH server alias name where the Kubernetes YAML file will be sent.
+	 *
+	 * Can be an array of aliases: they are tested in order and the first one
+	 * that answers is used (fallback).
 	 */
-	serverName: string;
+	serverName: string | string[];
 	/**
 	 * The folder inside .kube-yaml in the server
 	 */
@@ -56,14 +66,18 @@ export class ReleaseScript {
 	private readonly appName: string = 'App';
 	private readonly dockerImage: string = '';
 	private readonly yamlFile: string = '';
-	private readonly serverName: string = '';
+	private readonly serverNames: string[];
+	/** The server selected during `beforeStart` (first one that answered). */
+	private serverName = '';
 	private readonly yamlFolder: string = '';
 	private readonly betaYamlFile: string = '';
 	private readonly dryRun: boolean;
 
 	constructor(params: ReleaseScriptParams) {
 		this.dockerImage = params.dockerImage;
-		this.serverName = params.serverName;
+		this.serverNames = Array.isArray(params.serverName)
+			? params.serverName
+			: [params.serverName];
 		this.yamlFile = path.parse(params.yamlFile).name;
 		this.yamlFolder = params.yamlFolder;
 		this.dryRun = params.dryRun ?? process.argv.includes('--dry-run');
@@ -84,12 +98,30 @@ export class ReleaseScript {
 
 		// Test serverName
 		console.info(chalk.blue('1.a. Testing ssh connexion...'));
-		try {
-			exec(`ssh -T ${this.serverName}`);
-		} catch (error) {
+		for (const server of this.serverNames) {
+			try {
+				exec(
+					`ssh -T -o ConnectTimeout=${SSH_CONNECT_TIMEOUT_S} ${server}`,
+					{
+						timeout: SSH_TIMEOUT_MS,
+					}
+				);
+				this.serverName = server;
+				console.info(chalk.green(`Server ${server} is up!\n`));
+				break;
+			} catch (error) {
+				console.error(
+					chalk.red(`Failed to connect to ${server}`),
+					error
+				);
+			}
+		}
+
+		if (!this.serverName) {
 			console.error(
-				chalk.red(`Failed to connect to ${this.serverName}`),
-				error
+				chalk.red(
+					`Unable to connect to any server (${this.serverNames.join(', ')})`
+				)
 			);
 			exit(1);
 		}
@@ -316,7 +348,7 @@ export class ReleaseScript {
 		const file = release === 'beta' ? this.betaYamlFile : this.yamlFile;
 		const filePath = `${process.cwd()}/release/${file}.yaml`;
 
-		const scpCommand = `scp -P 91 ${filePath} ${this.serverName}:.kube-yaml/${this.yamlFolder}`;
+		const scpCommand = `scp -P 91 -o ConnectTimeout=${SSH_CONNECT_TIMEOUT_S} ${filePath} ${this.serverName}:.kube-yaml/${this.yamlFolder}`;
 
 		if (this.dryRun) {
 			console.info(chalk.yellow(`[dry-run] ${scpCommand}`));
@@ -325,6 +357,7 @@ export class ReleaseScript {
 
 		exec(scpCommand, {
 			stdio: 'inherit',
+			timeout: SCP_TIMEOUT_MS,
 		});
 
 		console.info(
