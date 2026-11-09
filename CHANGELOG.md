@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.22.1](https://github.com/feed-it/commons/compare/v1.22.0...v1.22.1) (2026-11-09)
+
+
+### Bug Fixes
+
+* **ci:** allow @parcel/watcher build script ([15dfcd3](https://github.com/feed-it/commons/commit/15dfcd3a4bdd0ed577a7de580d872a1577d70078))
+
 ## [1.22.0](https://github.com/feed-it/commons/compare/v1.21.1...v1.22.0) (2026-11-09)
 
 
