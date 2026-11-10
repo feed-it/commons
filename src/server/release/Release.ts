@@ -251,7 +251,7 @@ export class ReleaseScript {
 			}
 		);
 		exec(
-			`docker buildx build --provenance=true --sbom=true -t ${this.dockerImage}:${release} ${this.dryRun ? '' : '--push '}--metadata-file ./build-metadata.json .`,
+			`docker buildx build --platform linux/amd64 --provenance=true --sbom=true -t ${this.dockerImage}:${release} ${this.dryRun ? '' : '--push '}--metadata-file ./build-metadata.json .`,
 			{
 				stdio: 'inherit',
 			}
